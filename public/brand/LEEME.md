@@ -1,50 +1,67 @@
 # Imágenes de marca
 
-Coloca aquí los archivos del negocio. El código ya los busca en estas rutas.
+**Deja los archivos en esta carpeta (`public/brand/`) con estos nombres exactos.**
+El código ya los busca ahí. No hay que tocar nada más: en cuanto existan, aparecen
+en la página.
 
-## Logo
+| Nombre del archivo | Qué es | Dónde se usa |
+|---|---|---|
+| `logo.png` | Logotipo ovalado | Encabezado, pie, JSON-LD, favicon opcional |
+| `torta-ahogada-don-eddy.jpg` | La torta con el caldillo sirviéndose | **Portada** (la imagen principal), Instagram, JSON-LD |
+| `tacos-dorados-don-eddy.jpg` | Los tres tacos dorados con salsa | Instagram, JSON-LD |
+| `don-eddy-personaje.png` | La ilustración de Don Eddy con mandil | Bloque de la guía, Instagram |
+| `local-don-eddy-la-cima-zapopan.jpg` | Fachada del local *(pendiente)* | Instagram, cuando exista |
 
-Guarda el logo como **`logo.png`** en esta carpeta (`public/brand/logo.png`).
+Si el nombre no coincide, la página muestra el mosaico dorado de respaldo en vez
+de la foto. No se rompe nada, simplemente no aparece.
 
-- Formato: PNG con fondo transparente, o JPG si tiene fondo.
-- Tamaño mínimo recomendado: 512 × 512 px, cuadrado.
-- El componente `BrandLogo` prueba en orden `logo.png`, `logo.jpg` y `logo.svg`.
-  Si no encuentra ninguno, muestra un monograma "DE" con los colores de la marca,
-  para que nunca se vea una imagen rota.
+## No hace falta preparar las imágenes
 
-Verifica que abra en `http://localhost:3000/brand/logo.png` después de copiarlo.
+Sube el archivo **original, en la mejor resolución que tengas**. El sitio usa
+`next/image`, que se encarga solo de:
 
-## Fotos de los platillos — lo más importante que falta
+- Convertirlas a AVIF y WebP según el navegador. Una foto de comida suele bajar
+  entre 40 % y 60 % de peso sin diferencia visible.
+- Generar varios tamaños y servir el que toca: un celular descarga una versión
+  chica, no la original completa.
+- Recortarlas al encuadre de cada sección. La misma foto vertical sirve para la
+  portada y para una miniatura cuadrada; no hay que guardar dos versiones.
+- Reservar el espacio antes de cargar, para que no salte el layout.
 
-El sitio no tiene ni una sola foto de comida, y para un negocio de antojo esa es
-la carencia más costosa que queda. Afecta dos cosas a la vez:
+Así que **no las recortes ni las comprimas antes de subirlas**. Entre más grande
+el original, mejor trabaja el optimizador.
 
-1. **Conversión.** Nadie decide pedir tortas ahogadas leyendo una descripción.
-2. **Posicionamiento.** Sin imágenes no puedes aparecer en Google Imágenes ni en
-   los resultados enriquecidos con foto, que son los que se llevan el clic.
+Una sola excepción, el logo: conviene subirlo **en PNG con fondo transparente y
+sin margen blanco alrededor**. Si trae fondo blanco, se va a ver un rectángulo
+blanco sobre el crema del encabezado.
 
-Cuando tengas las fotos, guárdalas aquí con nombres descriptivos —el nombre del
-archivo es una señal de SEO para Google Imágenes:
+## Cómo subirlas desde GitHub
 
+Sin instalar nada:
+
+1. Entra a la rama del proyecto:
+   https://github.com/MizhraimLugo/tortas_doneddy/tree/claude/don-eddy-landing-analysis-co2lby
+2. Navega a la carpeta `public` → `brand`
+3. Botón **Add file** → **Upload files**
+4. Arrastra los archivos **ya renombrados** como en la tabla de arriba
+5. Abajo, en *Commit changes*, escribe algo como `Agrega fotos del negocio`
+6. Asegúrate de que diga **Commit directly to the `claude/don-eddy-landing-analysis-co2lby` branch**
+7. **Commit changes**
+
+Si prefieres desde tu computadora:
+
+```bash
+git checkout claude/don-eddy-landing-analysis-co2lby
+git pull
+cp /ruta/de/tus/fotos/*.jpg public/brand/
+git add public/brand && git commit -m "Agrega fotos del negocio" && git push
 ```
-torta-ahogada-pierna-don-eddy-zapopan.jpg
-tacos-dorados-frijol-don-eddy.jpg
-combo-familiar-tortas-ahogadas.jpg
-local-don-eddy-la-cima-zapopan.jpg
-```
 
-Recomendaciones de captura:
+## Qué falta fotografiar
 
-- Luz natural, de día, sin flash.
-- La salsa brillante y el birote visible: es el diferenciador del platillo.
-- Una foto del local por fuera ayuda a que la gente lo reconozca al llegar.
-- Formato horizontal (16:9) para las que vayan en portada.
-
-Después de agregarlas, súmalas al arreglo `image` del nodo Restaurant en
-`src/lib/schema.ts` y colócalas en las secciones con el componente
-`next/image`, que las convierte a WebP y AVIF automáticamente.
-
-## Icono para pestaña y celular
-
-El favicon se genera por código en `src/app/icon.tsx`. Si prefieres usar el logo
-real, borra ese archivo y coloca `icon.png` (512 × 512 px) en `src/app/`.
+- **La fachada del local.** Ayuda a que la gente reconozca el lugar al llegar y
+  es de las fotos que más se ven en una ficha de Google.
+- **Un plato de mini tortas** y **las aguas frescas por separado**, para la
+  página de menú.
+- Consejos: luz de día, sin flash, la salsa brillante y el birote visible.
+  Formato horizontal para lo que vaya en portada, vertical para el menú.

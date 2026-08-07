@@ -1,6 +1,7 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChefHat } from "lucide-react";
 import Link from "next/link";
 
+import { FoodImage } from "@/components/food-image";
 import { JsonLd } from "@/components/json-ld";
 import { SectionHeading } from "@/components/ornaments";
 import { Antojos } from "@/components/sections/antojos";
@@ -13,6 +14,7 @@ import { Location } from "@/components/sections/location";
 import { MenuList } from "@/components/sections/menu-list";
 import { business } from "@/data/business";
 import { featuredFaq } from "@/data/faq";
+import { images } from "@/data/images";
 import { menu } from "@/data/menu";
 import { faqNode, graph, menuNode, webPageNode } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
@@ -91,23 +93,41 @@ export default function HomePage() {
         intro="Horarios, ubicación, precios y entregas, resueltos de una vez."
       />
 
-      {/* Puente hacia la guía: convierte tráfico informativo en clientes. */}
+      {/*
+        Puente hacia la guía: convierte tráfico informativo en clientes.
+        Don Eddy en persona hace de anfitrión; un negocio con cara detrás
+        genera más confianza que uno anónimo, y eso también cuenta como señal
+        de experiencia real para los buscadores.
+      */}
       <section className="shell shell-mid pb-20">
-        <div className="rounded-3xl border-2 border-ink bg-gold p-7 shadow-stamp md:p-10">
-          <h2 className="text-[clamp(1.6rem,3.5vw,2.25rem)] text-chile">
-            ¿Nunca has comido una torta ahogada?
-          </h2>
-          <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink/80">
-            Te explicamos qué lleva, de dónde viene, por qué el birote salado es
-            indispensable y cómo se come sin terminar bañado en salsa.
-          </p>
-          <Link
-            href="/que-es-una-torta-ahogada"
-            className="mt-5 inline-flex items-center gap-2 border-b-2 border-chile pb-1 font-display text-lg text-chile hover:border-ink hover:text-ink"
-          >
-            Leer la guía de la torta ahogada
-            <ArrowRight className="h-5 w-5" aria-hidden="true" />
-          </Link>
+        <div className="grid items-center gap-6 rounded-3xl border-2 border-ink bg-gold p-7 shadow-stamp sm:grid-cols-[1fr_auto] md:p-10">
+          <div>
+            <h2 className="text-[clamp(1.6rem,3.5vw,2.25rem)] text-chile">
+              ¿Nunca has comido una torta ahogada?
+            </h2>
+            <p className="mt-3 max-w-xl text-base leading-relaxed text-ink/80">
+              Te explicamos qué lleva, de dónde viene, por qué el birote salado es
+              indispensable y cómo se come sin terminar bañado en salsa.
+            </p>
+            <Link
+              href="/que-es-una-torta-ahogada"
+              className="mt-5 inline-flex items-center gap-2 border-b-2 border-chile pb-1 font-display text-lg text-chile hover:border-ink hover:text-ink"
+            >
+              Leer la guía de la torta ahogada
+              <ArrowRight className="h-5 w-5" aria-hidden="true" />
+            </Link>
+          </div>
+
+          <FoodImage
+            src={images.personaje.src}
+            alt={images.personaje.alt}
+            aspect="1 / 1"
+            fit="contain"
+            tone="gold"
+            sizes="200px"
+            className="mx-auto w-40 shrink-0 sm:w-48"
+            fallbackIcon={<ChefHat className="h-14 w-14" aria-hidden="true" />}
+          />
         </div>
       </section>
 

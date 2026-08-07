@@ -32,7 +32,7 @@ export function SiteFooter() {
         <div className="grid gap-10 md:grid-cols-3">
           <div>
             <div className="flex items-center gap-3">
-              <BrandLogo size={56} />
+              <BrandLogo height={52} />
               <span>
                 <span className="block font-display text-xl leading-tight">
                   {business.name}

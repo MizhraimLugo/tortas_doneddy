@@ -1,26 +1,35 @@
 "use client";
 
+import NextImage from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
 /**
- * Foto de platillo con respaldo de marca.
+ * Foto de platillo, optimizada y con respaldo de marca.
  *
- * El negocio todavía no entrega fotos, así que este componente resuelve el
- * hueco sin que se vea inacabado: si el archivo existe lo muestra, y si no,
- * dibuja un mosaico con la trama de medio tono y un icono en color de marca.
- * Se lee como una decisión de diseño, no como una imagen rota.
+ * Usa `next/image`, que hace en automático lo que si no habría que hacer a mano
+ * foto por foto:
  *
- * El respaldo NO lleva instrucciones para el desarrollador. Esa fue una de las
- * fallas de la versión original —mostraba al cliente cosas como "en este
- * preview el mapa está desactivado"—; dónde colocar los archivos se documenta
- * en `public/brand/LEEME.md`, que es donde le sirve a quien mantiene el sitio.
+ *  - Convierte a AVIF y WebP según lo que soporte el navegador. Un JPG de
+ *    fotografía de comida suele bajar entre 40 % y 60 % de peso sin diferencia
+ *    visible.
+ *  - Genera varios tamaños y sirve el que corresponde: un celular descarga una
+ *    versión chica en vez de la original de 1500 px de ancho.
+ *  - Recorta al encuadre que pide cada sección con `object-cover`, así la misma
+ *    foto vertical funciona en la portada y en una miniatura cuadrada sin tener
+ *    que guardar dos archivos.
+ *  - Reserva el espacio antes de cargar, de modo que no hay salto de layout
+ *    (CLS), que es una de las tres métricas de Core Web Vitals.
  *
- * Igual que en `BrandLogo`, se comprueba `complete`/`naturalWidth` al montar:
- * la imagen viene en el HTML del servidor y puede fallar antes de que React
- * hidrate, en cuyo caso el evento `onError` se pierde y quedaría el icono de
- * imagen rota del navegador.
+ * Todo eso ocurre en el servidor la primera vez que se pide cada tamaño, y
+ * después queda en caché. No hay que preparar las imágenes: basta subir el
+ * archivo original en buena resolución.
+ *
+ * Si el archivo todavía no existe, dibuja un mosaico con la trama de medio tono
+ * y un icono de marca. El respaldo NO lleva instrucciones para el desarrollador:
+ * mostrarle notas técnicas al cliente fue una de las fallas de la versión
+ * original. Dónde van los archivos se documenta en `public/brand/LEEME.md`.
  */
 
 type FoodImageProps = {
@@ -32,11 +41,30 @@ type FoodImageProps = {
    */
   alt: string;
   className?: string;
-  /** Proporción del hueco; reservarla evita salto de layout (CLS). */
+  /** Proporción del encuadre. La foto se recorta a esta forma. */
   aspect?: string;
-  /** `true` para la imagen principal de la portada (carga prioritaria). */
+  /**
+   * Qué parte de la foto conservar al recortar. Útil cuando el platillo no está
+   * al centro del encuadre original.
+   */
+  focus?: string;
+  /**
+   * `cover` recorta al encuadre (lo normal en fotos de platillos); `contain`
+   * muestra la imagen completa sin cortar, para ilustraciones y personajes,
+   * donde recortar la cabeza no es una opción.
+   */
+  fit?: "cover" | "contain";
+  /** Color de fondo del hueco. */
+  tone?: "gold" | "cream";
+  /** `true` en la imagen principal de la portada: es el LCP de la página. */
   priority?: boolean;
-  /** Icono del respaldo, en el sistema visual del sitio. */
+  /**
+   * Anchos en los que se muestra, para que el navegador elija el archivo justo.
+   * Sin esto `next/image` asume el ancho completo del viewport y descarga de
+   * más en móvil.
+   */
+  sizes?: string;
+  /** Icono del respaldo, dentro del sistema visual del sitio. */
   fallbackIcon?: React.ReactNode;
 };
 
@@ -45,21 +73,34 @@ export function FoodImage({
   alt,
   className,
   aspect = "4 / 3",
+  focus = "center",
+  fit = "cover",
+  tone = "gold",
   priority = false,
+  sizes = "(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 600px",
   fallbackIcon,
 }: FoodImageProps) {
   const [failed, setFailed] = useState(false);
-  const imgRef = useRef<HTMLImageElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const fail = useCallback(() => setFailed(true), []);
 
+  // La imagen viene en el HTML del servidor, así que puede fallar antes de que
+  // React hidrate y conecte `onError`. En ese caso el evento se pierde y
+  // quedaría el icono de imagen rota del navegador, por eso al montar se revisa
+  // también el estado real del elemento.
   useEffect(() => {
-    const img = imgRef.current;
+    const img = wrapperRef.current?.querySelector("img");
     if (img && img.complete && img.naturalWidth === 0) fail();
   }, [fail]);
 
   return (
     <div
-      className={cn("relative overflow-hidden bg-gold", className)}
+      ref={wrapperRef}
+      className={cn(
+        "relative overflow-hidden",
+        tone === "gold" ? "bg-gold" : "bg-cream",
+        className
+      )}
       style={{ aspectRatio: aspect }}
     >
       {failed ? (
@@ -72,14 +113,15 @@ export function FoodImage({
           <span className="sr-only">{alt}</span>
         </div>
       ) : (
-        <img
-          ref={imgRef}
+        <NextImage
           src={src}
           alt={alt}
-          loading={priority ? "eager" : "lazy"}
-          decoding="async"
-          {...(priority && { fetchPriority: "high" as const })}
-          className="absolute inset-0 h-full w-full object-cover"
+          fill
+          sizes={sizes}
+          priority={priority}
+          quality={82}
+          className={fit === "contain" ? "object-contain" : "object-cover"}
+          style={{ objectPosition: focus }}
           onError={fail}
         />
       )}

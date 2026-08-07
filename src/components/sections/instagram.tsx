@@ -1,49 +1,23 @@
-import { CupSoda, Sandwich, Soup, Store } from "lucide-react";
-
 import { FoodImage } from "@/components/food-image";
 import { InstagramIcon } from "@/components/icons/instagram";
 import { OrderLink } from "@/components/order-link";
 import { business } from "@/data/business";
+import { images } from "@/data/images";
 
 /**
  * Instagram.
  *
- * En la versión original esta sección eran cuatro cuadros vacíos con un
- * atributo `title` que le hablaba al desarrollador ("Aquí puedes integrar un
- * feed de Instagram") y que los lectores de pantalla anunciaban al usuario.
+ * En la versión original esta sección eran cuatro divs vacíos con un atributo
+ * `title` que le hablaba al desarrollador ("Aquí puedes integrar un feed de
+ * Instagram") y que los lectores de pantalla anunciaban al usuario.
  *
- * Ahora son huecos de foto reales con respaldo de marca: en cuanto se dejen los
- * archivos en `public/brand/` la sección se llena sola, y mientras tanto se ve
- * como una decisión de diseño y no como algo roto.
- *
- * El enlace al perfil es un `<a>` de verdad, lo que además refuerza la señal de
- * entidad: `sameAs` en el JSON-LD y un enlace rastreable dicen lo mismo.
+ * Son tres huecos y no cuatro a propósito: hay tres piezas reales. Rellenar un
+ * cuarto con un marcador dejaría un hoyo visible al lado de fotos de verdad,
+ * que se ve peor que una retícula de tres completa. Cuando haya una foto del
+ * local, se agrega aquí y la retícula pasa a cuatro.
  */
 
-const ICON = "h-12 w-12";
-
-const POSTS = [
-  {
-    src: "/brand/instagram-1.jpg",
-    alt: "Torta ahogada recién preparada en Tortas Don Eddy",
-    icon: <Sandwich className={ICON} aria-hidden="true" />,
-  },
-  {
-    src: "/brand/instagram-2.jpg",
-    alt: "Tacos dorados con salsa y repollo",
-    icon: <Soup className={ICON} aria-hidden="true" />,
-  },
-  {
-    src: "/brand/instagram-3.jpg",
-    alt: "Aguas frescas de jamaica y horchata",
-    icon: <CupSoda className={ICON} aria-hidden="true" />,
-  },
-  {
-    src: "/brand/instagram-4.jpg",
-    alt: "El local de Tortas Don Eddy en La Cima, Zapopan",
-    icon: <Store className={ICON} aria-hidden="true" />,
-  },
-];
+const POSTS = [images.tortaAhogada, images.tacosDorados, images.personaje];
 
 export function Instagram() {
   return (
@@ -76,7 +50,7 @@ export function Instagram() {
           </OrderLink>
         </div>
 
-        <ul className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <ul className="mt-8 grid gap-4 sm:grid-cols-3">
           {POSTS.map((post) => (
             <li key={post.src}>
               <div className="overflow-hidden rounded-2xl border-2 border-ink shadow-stamp-gold">
@@ -84,7 +58,7 @@ export function Instagram() {
                   src={post.src}
                   alt={post.alt}
                   aspect="1 / 1"
-                  fallbackIcon={post.icon}
+                  sizes="(max-width: 640px) 100vw, 360px"
                 />
               </div>
             </li>

@@ -42,7 +42,7 @@ export function SiteHeader() {
           className="flex items-center gap-3"
           aria-label={`${business.name} — inicio`}
         >
-          <BrandLogo size={54} priority />
+          <BrandLogo height={50} priority />
           <span className="leading-none">
             <span className="block text-[0.6rem] font-extrabold uppercase tracking-[0.2em] text-brand-red-dark">
               Tortas Ahogadas

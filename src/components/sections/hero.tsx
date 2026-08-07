@@ -5,6 +5,7 @@ import { FoodImage } from "@/components/food-image";
 import { OrderLink } from "@/components/order-link";
 import { PapelPicado } from "@/components/ornaments";
 import { business, fullAddress, serviceAreasText, waMessages } from "@/data/business";
+import { images } from "@/data/images";
 import { findMenuItem, formatPrice } from "@/data/menu";
 
 /**
@@ -102,13 +103,18 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Foto principal, ligeramente girada como una foto clavada al muro. */}
+        {/*
+          Foto principal, ligeramente girada como una foto clavada al muro.
+          La proporción es vertical porque la toma lo es: recortarla a
+          horizontal cortaría el plato, que es justo lo que tiene que dar
+          hambre. `priority` la marca como el LCP de la página.
+        */}
         <div className="rise relative mx-auto w-full max-w-sm [animation-delay:220ms] lg:max-w-md">
           <div className="rotate-[1.5deg] rounded-[2rem] border-4 border-gold bg-gold p-2 shadow-[10px_10px_0_0_var(--color-chile-deep)]">
             <FoodImage
-              src="/brand/torta-ahogada-don-eddy.jpg"
-              alt={`Torta ahogada de ${business.name} con birote salado, bañada en salsa de jitomate y chile de árbol`}
-              aspect="4 / 3"
+              src={images.tortaAhogada.src}
+              alt={images.tortaAhogada.alt}
+              aspect="4 / 5"
               priority
               className="rounded-[1.5rem]"
               fallbackIcon={<Sandwich className="h-20 w-20" aria-hidden="true" />}

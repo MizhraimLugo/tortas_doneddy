@@ -17,6 +17,7 @@ import { business, fullAddress, serviceAreasText } from "@/data/business";
 import { SITE_URL } from "@/data/business";
 import { combos, comboSummary } from "@/data/combos";
 import { faq } from "@/data/faq";
+import { images, schemaImages } from "@/data/images";
 import { menu, maxPrice, minPrice } from "@/data/menu";
 
 // ── Identificadores estables del grafo ───────────────────────────────────────
@@ -32,6 +33,15 @@ const absolute = (path: string) => `${SITE_URL}${path.startsWith("/") ? path : `
 /** Imagen por defecto: la portada Open Graph generada dinámicamente. */
 const defaultImage = absolute("/opengraph-image");
 
+/**
+ * Fotos reales del negocio para el nodo Restaurant.
+ *
+ * Google usa `image` para los resultados enriquecidos y el panel de
+ * conocimiento local. Una ficha con foto de la comida se lleva el clic frente a
+ * una sin ella, así que estas van antes que la portada generada.
+ */
+const businessPhotos = [...schemaImages.map((img) => absolute(img.src)), defaultImage];
+
 // ── Nodo principal: el negocio ───────────────────────────────────────────────
 export function restaurantNode() {
   return {
@@ -46,8 +56,8 @@ export function restaurantNode() {
     // local es el dato de mayor conversión y Google lo usa en el map pack.
     telephone: business.phone.e164,
 
-    image: [defaultImage],
-    logo: absolute("/brand/logo.png"),
+    image: businessPhotos,
+    logo: absolute(images.logo),
     priceRange: business.priceRange,
     currenciesAccepted: business.currency,
     ...(business.paymentAccepted.length > 0 && {
