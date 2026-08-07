@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+/**
+ * Paleta de marca.
+ *
+ * Se conservan los colores originales del logo, pero se agregan dos tonos
+ * oscuros para fondos con texto blanco. Motivo: medido en ratio de contraste
+ * contra blanco, el rojo original (#E9241A) da 4.44:1 y el verde (#3B874C) da
+ * 4.42:1, ambos por debajo del mínimo 4.5:1 que exige WCAG AA para texto normal.
+ *
+ * Los tonos originales siguen usándose en acentos, bordes, iconos y títulos
+ * grandes, donde el umbral es 3:1 y sí cumplen. La identidad no cambia.
+ */
+@theme {
+  --color-brand-red: #e9241a;
+  --color-brand-red-dark: #cd1c11; /* 5.57:1 sobre blanco ✓ AA */
+  --color-brand-green: #3b874c;
+  --color-brand-green-dark: #2f6b3d; /* 6.38:1 sobre blanco ✓ AA */
+  --color-brand-gold: #ecba54;
+  --color-brand-gold-soft: #fdf3dd;
+  --color-brand-ink: #191010;
+  --color-brand-cream: #fffaf2;
+
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, "Noto Sans", sans-serif;
+
+  --spacing-13: 3.25rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /*
+   * El encabezado fijo mide ~104 px. Sin este margen, cada ancla (#menu,
+   * #paquetes...) aterriza con el título escondido detrás del header.
+   * Resolverlo en CSS permite eliminar el `scrollToId` de JavaScript por
+   * completo y hace que los enlaces funcionen aunque el JS no cargue.
+   */
+  [id] {
+    scroll-margin-top: 7rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background-color: var(--color-brand-cream);
+    color: var(--color-brand-ink);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Oculta el triángulo por defecto de <summary> también en Safari. */
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary {
+    list-style: none;
+  }
+
+  /* Foco visible y consistente para navegación por teclado. */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-ink);
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  /*
+   * Enlace para saltar al contenido: visible solo cuando recibe foco.
+   * Es el primer elemento tabulable de la página.
+   */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+  }
+  .skip-link:focus {
+    left: 1rem;
+    top: 1rem;
+  }
+}
