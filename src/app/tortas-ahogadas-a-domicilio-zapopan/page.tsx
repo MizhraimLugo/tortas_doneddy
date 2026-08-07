@@ -1,13 +1,16 @@
-import { MessageCircle, Phone, ShoppingBag } from "lucide-react";
+import { ArrowRight, Clock, MapPin, MessageCircle, Phone, ShoppingBag, Truck } from "lucide-react";
 import Link from "next/link";
 
-import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
 import { OrderLink } from "@/components/order-link";
+import { PageHero, PageHeroFact } from "@/components/page-hero";
+import { FaqSection } from "@/components/sections/faq-section";
 import { business, fullAddress, serviceAreasText, waMessages } from "@/data/business";
 import { combos } from "@/data/combos";
+import { faqByTopic } from "@/data/faq";
 import { findMenuItem, formatPrice } from "@/data/menu";
-import { breadcrumbNode, graph, webPageNode } from "@/lib/schema";
+import { PAQUETES_PATH } from "@/data/nav";
+import { breadcrumbNode, faqNode, graph, webPageNode } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
 
 /**
@@ -64,49 +67,69 @@ const PASOS = [
   },
 ];
 
+const faqDomicilio = faqByTopic("domicilio");
+
 export default function DomicilioPage() {
   const comboFamiliar = combos.find((c) => c.id === "familiar");
 
   return (
     <>
-      <div className="shell shell-mid py-10 md:py-14">
-        <Breadcrumbs trail={TRAIL} />
+      <PageHero
+        trail={TRAIL}
+        eyebrow="Entrega a domicilio"
+        title="Tortas ahogadas a domicilio en Zapopan"
+        intro={
+          <>
+            {business.name} entrega tortas ahogadas a domicilio en {serviceAreasText}.
+            Pides por WhatsApp al {business.phone.displayIntl}, por teléfono al mismo
+            número, o desde Rappi y Uber Eats. Servimos de {business.hours.range},{" "}
+            {business.hours.openDaysEs.toLowerCase()};{" "}
+            {business.hours.closedNote.toLowerCase()}.
+          </>
+        }
+        actions={
+          <>
+            <OrderLink
+              href={business.whatsapp(waMessages.delivery())}
+              channel="whatsapp"
+              location="domicilio_encabezado"
+              variant="onDark"
+              size="lg"
+            >
+              <MessageCircle className="h-5 w-5" aria-hidden="true" />
+              Pedir por WhatsApp
+            </OrderLink>
+            <OrderLink
+              href={business.phone.telHref}
+              channel="telefono"
+              location="domicilio_encabezado"
+              variant="onDarkOutline"
+              size="lg"
+            >
+              <Phone className="h-5 w-5" aria-hidden="true" />
+              {business.phone.display}
+            </OrderLink>
+          </>
+        }
+        facts={
+          <ul className="grid gap-4 sm:grid-cols-3">
+            <PageHeroFact icon={<Clock className="h-5 w-5" aria-hidden="true" />} label="Horario">
+              {business.hours.range} · {business.hours.closedNote}
+            </PageHeroFact>
+            <PageHeroFact icon={<Truck className="h-5 w-5" aria-hidden="true" />} label="Cobertura">
+              {business.serviceAreas.length} colonias del norte de{" "}
+              {business.address.locality}
+            </PageHeroFact>
+            <PageHeroFact icon={<MapPin className="h-5 w-5" aria-hidden="true" />} label="Salimos de">
+              {fullAddress}
+            </PageHeroFact>
+          </ul>
+        }
+      />
 
-        <h1 className="mt-5 text-4xl md:text-5xl">
-          Tortas ahogadas a domicilio en Zapopan
-        </h1>
-
-        <p data-speakable className="mt-4 text-lg leading-relaxed text-ink/75">
-          {business.name} entrega tortas ahogadas a domicilio en {serviceAreasText}.
-          Pides por WhatsApp al {business.phone.displayIntl}, por teléfono al mismo
-          número, o desde Rappi y Uber Eats. Servimos de {business.hours.range},{" "}
-          {business.hours.openDaysEs.toLowerCase()}; {business.hours.closedNote.toLowerCase()}.
-        </p>
-
-        <div className="mt-7 flex flex-wrap gap-3">
-          <OrderLink
-            href={business.whatsapp(waMessages.delivery())}
-            channel="whatsapp"
-            location="domicilio_encabezado"
-            size="lg"
-          >
-            <MessageCircle className="h-5 w-5" aria-hidden="true" />
-            Pedir por WhatsApp
-          </OrderLink>
-          <OrderLink
-            href={business.phone.telHref}
-            channel="telefono"
-            location="domicilio_encabezado"
-            variant="outline"
-            size="lg"
-          >
-            <Phone className="h-5 w-5" aria-hidden="true" />
-            {business.phone.display}
-          </OrderLink>
-        </div>
-
+      <div className="shell shell-mid grid gap-14 py-12 md:py-16">
         {/* Cobertura: cada colonia como texto plano captura su búsqueda propia. */}
-        <section className="mt-12">
+        <section>
           <h2 className="text-2xl md:text-3xl">
             Colonias donde entregamos
           </h2>
@@ -146,7 +169,7 @@ export default function DomicilioPage() {
         </section>
 
         {/* Proceso: contenido único que justifica esta página frente a la portada. */}
-        <section className="mt-12">
+        <section>
           <h2 className="text-2xl md:text-3xl">
             Cómo pedir, paso a paso
           </h2>
@@ -171,7 +194,7 @@ export default function DomicilioPage() {
           </ol>
         </section>
 
-        <section className="mt-12">
+        <section>
           <h2 className="text-2xl md:text-3xl">
             Pedir directo o por aplicación
           </h2>
@@ -236,26 +259,39 @@ export default function DomicilioPage() {
         </section>
 
         {comboFamiliar && (
-          <section className="mt-12 rounded-3xl border-2 border-gold bg-gold-soft p-6 md:p-8">
-            <h2 className="text-2xl ">
+          <section className="rounded-3xl border-2 border-ink bg-gold-soft p-6 shadow-stamp md:p-8">
+            <h2 className="text-2xl text-chile">
               ¿Piden varios? Sale más barato en combo
             </h2>
             <p className="mt-2 text-base leading-relaxed text-ink/75">
               El {comboFamiliar.name} trae {comboFamiliar.includes.join(" y ")} por{" "}
               {formatPrice(comboFamiliar.promo)} en vez de{" "}
               {formatPrice(comboFamiliar.regular)}: te ahorras{" "}
-              {formatPrice(comboFamiliar.savings)}. Hay cuatro paquetes, desde dos hasta
-              dieciséis personas.
+              {formatPrice(comboFamiliar.savings)} y sale en{" "}
+              {formatPrice(comboFamiliar.perPerson)} por persona. Hay cuatro paquetes,
+              desde dos hasta dieciséis personas.
             </p>
             <Link
-              href="/#paquetes"
-              className="mt-4 inline-block font-bold text-brand-red-dark hover:underline"
+              href={PAQUETES_PATH}
+              className="mt-5 inline-flex items-center gap-2 border-b-2 border-chile pb-1 font-display text-lg text-chile transition-colors hover:border-ink hover:text-ink"
             >
               Ver los cuatro paquetes
+              <ArrowRight className="h-5 w-5" aria-hidden="true" />
             </Link>
           </section>
         )}
       </div>
+
+      <FaqSection
+        items={faqDomicilio}
+        title={
+          <>
+            Dudas sobre la
+            <span className="block text-chile">entrega a domicilio</span>
+          </>
+        }
+        intro="Cobertura, horarios, cómo pedir y en qué aplicaciones estamos."
+      />
 
       <JsonLd
         data={graph(
@@ -264,6 +300,7 @@ export default function DomicilioPage() {
             name: "Tortas ahogadas a domicilio en Zapopan",
             description: `Entrega a domicilio de tortas ahogadas en ${serviceAreasText}.`,
           }),
+          faqNode({ path: "/tortas-ahogadas-a-domicilio-zapopan", items: faqDomicilio }),
           breadcrumbNode(TRAIL)
         )}
       />

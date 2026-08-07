@@ -1,6 +1,8 @@
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
+import { cn } from "@/lib/utils";
+
 /**
  * Migas de pan.
  *
@@ -13,12 +15,26 @@ import Link from "next/link";
 
 type BreadcrumbsProps = {
   trail: Array<{ name: string; path: string }>;
+  /**
+   * `cream` para las migas que van sobre la banda roja del encabezado de
+   * página. El gris de `ink/60` sobre rojo queda por debajo del mínimo de
+   * contraste, así que sobre fondo oscuro se cambia el juego de colores entero
+   * en vez de bajarle la opacidad al mismo tono.
+   */
+  tone?: "ink" | "cream";
 };
 
-export function Breadcrumbs({ trail }: BreadcrumbsProps) {
+export function Breadcrumbs({ trail, tone = "ink" }: BreadcrumbsProps) {
+  const onDark = tone === "cream";
+
   return (
     <nav aria-label="Ruta de navegación">
-      <ol className="flex flex-wrap items-center gap-1.5 text-sm text-ink/60">
+      <ol
+        className={cn(
+          "flex flex-wrap items-center gap-1.5 text-sm",
+          onDark ? "text-cream/75" : "text-ink/60"
+        )}
+      >
         {trail.map((crumb, index) => {
           const isLast = index === trail.length - 1;
 
@@ -30,7 +46,10 @@ export function Breadcrumbs({ trail }: BreadcrumbsProps) {
 
               {isLast ? (
                 // El elemento actual no se enlaza a sí mismo.
-                <span aria-current="page" className="font-semibold text-ink/80">
+                <span
+                  aria-current="page"
+                  className={cn("font-semibold", onDark ? "text-gold" : "text-ink/80")}
+                >
                   {crumb.name}
                 </span>
               ) : (

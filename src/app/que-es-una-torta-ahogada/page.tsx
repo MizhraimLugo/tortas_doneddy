@@ -1,11 +1,16 @@
+import { ArrowRight, ChefHat } from "lucide-react";
 import Link from "next/link";
 
-import { Breadcrumbs } from "@/components/breadcrumbs";
+import { FoodImage } from "@/components/food-image";
 import { JsonLd } from "@/components/json-ld";
 import { OrderLink } from "@/components/order-link";
+import { PageHero } from "@/components/page-hero";
+import { FaqSection } from "@/components/sections/faq-section";
 import { business, waMessages } from "@/data/business";
+import { faqByTopic } from "@/data/faq";
+import { images } from "@/data/images";
 import { findMenuItem, formatPrice } from "@/data/menu";
-import { articleNode, breadcrumbNode, graph, webPageNode } from "@/lib/schema";
+import { articleNode, breadcrumbNode, faqNode, graph, webPageNode } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
 
 /**
@@ -24,6 +29,10 @@ import { buildMetadata } from "@/lib/seo";
  *
  * Cada H2 está redactado como la pregunta que escribe una persona, y el primer
  * párrafo bajo cada uno responde de forma completa y citable por sí solo.
+ *
+ * Los encabezados llevan `id` y arriba va un índice que enlaza a cada uno. Sirve
+ * a quien llega buscando una sola cosa —"cómo se come"— y además le da a Google
+ * los saltos de sección que a veces muestra debajo del resultado.
  */
 
 const TRAIL = [
@@ -35,6 +44,18 @@ const TRAIL = [
 // frescura es señal de posicionamiento y los modelos prefieren fuentes recientes.
 const PUBLICADO = "2026-01-15";
 const ACTUALIZADO = "2026-01-15";
+
+/** Índice del artículo. El `id` es el ancla y el `titulo` es el H2 literal. */
+const SECCIONES = [
+  { id: "origen", titulo: "¿De dónde viene la torta ahogada?", corto: "Origen" },
+  { id: "ingredientes", titulo: "¿Qué lleva una torta ahogada?", corto: "Ingredientes" },
+  { id: "birote", titulo: "¿Por qué el birote salado es indispensable?", corto: "El birote" },
+  { id: "como-se-come", titulo: "¿Cómo se come una torta ahogada?", corto: "Cómo se come" },
+  { id: "a-que-hora", titulo: "¿A qué hora se come?", corto: "A qué hora" },
+  { id: "carnes", titulo: "¿Cuál es la diferencia entre pierna, buche y cuero?", corto: "Las carnes" },
+] as const;
+
+const faqGuia = faqByTopic("guia");
 
 export const metadata = buildMetadata({
   path: "/que-es-una-torta-ahogada",
@@ -56,33 +77,65 @@ export default function GuiaPage() {
 
   return (
     <>
-      <article className="shell shell-narrow py-10 md:py-14">
-        <Breadcrumbs trail={TRAIL} />
+      <PageHero
+        trail={TRAIL}
+        eyebrow="Guía de la torta ahogada"
+        title="¿Qué es una torta ahogada?"
+        intro={
+          <>
+            La torta ahogada es un platillo tradicional de Guadalajara y Zapopan, en
+            Jalisco, que consiste en un birote salado partido a la mitad, relleno de
+            carne de cerdo —normalmente pierna, buche o cuero— y sumergido por completo
+            en una salsa de jitomate. Encima lleva salsa de chile de árbol al gusto,
+            cebolla curtida en limón y sal. Se come con las manos, sobre un plato hondo,
+            y es uno de los desayunos más representativos del occidente de México.
+          </>
+        }
+        aside={
+          <div className="relative mx-auto w-full max-w-xs lg:max-w-sm">
+            <div className="rotate-[1.5deg] rounded-[2rem] border-4 border-gold bg-gold p-2 shadow-[10px_10px_0_0_var(--color-chile-deep)]">
+              <FoodImage
+                src={images.tortaAhogada.src}
+                alt={images.tortaAhogada.alt}
+                aspect="4 / 3"
+                priority
+                className="rounded-[1.5rem]"
+              />
+            </div>
+          </div>
+        }
+      />
 
-        <h1 className="mt-5 text-4xl md:text-5xl">
-          ¿Qué es una torta ahogada?
-        </h1>
-
-        <p className="mt-3 text-sm text-ink/55">
+      <article className="shell shell-narrow py-12 md:py-16">
+        <p className="text-sm text-ink/55">
           Guía escrita por {business.name}, {business.address.neighborhood},{" "}
           {business.address.locality}, Jalisco ·{" "}
           <time dateTime={ACTUALIZADO}>Actualizado en enero de 2026</time>
         </p>
 
-        {/* Respuesta directa arriba de todo: es el fragmento que se cita. */}
-        <p
-          data-speakable
-          className="mt-6 rounded-2xl border-2 border-gold bg-gold-soft p-5 text-lg font-medium leading-relaxed"
+        {/* Índice: seis apartados largos son varias pantallas en un teléfono. */}
+        <nav
+          aria-label="Contenido de la guía"
+          className="mt-6 rounded-2xl border-2 border-ink bg-gold-soft p-5 shadow-stamp-gold"
         >
-          La torta ahogada es un platillo tradicional de Guadalajara y Zapopan, en
-          Jalisco, que consiste en un birote salado partido a la mitad, relleno de
-          carne de cerdo —normalmente pierna, buche o cuero— y sumergido por completo
-          en una salsa de jitomate. Encima lleva salsa de chile de árbol al gusto,
-          cebolla curtida en limón y sal. Se come con las manos, sobre un plato hondo,
-          y es uno de los desayunos más representativos del occidente de México.
-        </p>
+          <h2 className="text-xs font-extrabold uppercase tracking-[0.22em] text-brand-red-dark">
+            En esta guía
+          </h2>
+          <ol className="mt-3 grid gap-1.5 text-base sm:grid-cols-2">
+            {SECCIONES.map((seccion, index) => (
+              <li key={seccion.id} className="flex gap-2">
+                <span aria-hidden="true" className="font-bold text-chile">
+                  {index + 1}.
+                </span>
+                <a href={`#${seccion.id}`} className="font-semibold hover:underline">
+                  {seccion.corto}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
 
-        <Seccion titulo="¿De dónde viene la torta ahogada?">
+        <Seccion id="origen" titulo={SECCIONES[0].titulo}>
           <p>
             La torta ahogada nació en Guadalajara, Jalisco, durante la primera mitad
             del siglo XX, y hoy es el platillo más identificado con la ciudad y su zona
@@ -98,7 +151,7 @@ export default function GuiaPage() {
           </p>
         </Seccion>
 
-        <Seccion titulo="¿Qué lleva una torta ahogada?">
+        <Seccion id="ingredientes" titulo={SECCIONES[1].titulo}>
           <p>
             Una torta ahogada lleva cuatro elementos, y los cuatro importan:
           </p>
@@ -126,7 +179,7 @@ export default function GuiaPage() {
           </p>
         </Seccion>
 
-        <Seccion titulo="¿Por qué el birote salado es indispensable?">
+        <Seccion id="birote" titulo={SECCIONES[2].titulo}>
           <p>
             El birote salado es un pan de masa fermentada, propio de la región de
             Guadalajara, con corteza dura y migajón firme y compacto. Esa estructura es
@@ -149,7 +202,7 @@ export default function GuiaPage() {
           </p>
         </Seccion>
 
-        <Seccion titulo="¿Cómo se come una torta ahogada?">
+        <Seccion id="como-se-come" titulo={SECCIONES[3].titulo}>
           <p>
             Se come con las manos, encima de un plato hondo y encorvándose sobre él.
             No hay forma elegante de hacerlo y no se espera que la haya. En muchos
@@ -172,7 +225,7 @@ export default function GuiaPage() {
           </ul>
         </Seccion>
 
-        <Seccion titulo="¿A qué hora se come?">
+        <Seccion id="a-que-hora" titulo={SECCIONES[4].titulo}>
           <p>
             En Jalisco la torta ahogada es principalmente un desayuno o un almuerzo:
             los puestos abren temprano y muchos cierran a media tarde. También tiene
@@ -182,7 +235,7 @@ export default function GuiaPage() {
           </p>
         </Seccion>
 
-        <Seccion titulo="¿Cuál es la diferencia entre pierna, buche y cuero?">
+        <Seccion id="carnes" titulo={SECCIONES[5].titulo}>
           <p>
             Son tres cortes distintos del cerdo y cambian bastante la experiencia:
           </p>
@@ -211,34 +264,64 @@ export default function GuiaPage() {
         </Seccion>
 
         {/* Cierre con conversión: la guía trae tráfico informativo y aquí se convierte. */}
-        <aside className="mt-12 rounded-3xl border-2 border-brand-red-dark bg-gold-soft p-6 md:p-8">
-          <h2 className="text-2xl ">
-            Pruébala en {business.address.neighborhood}, {business.address.locality}
-          </h2>
-          <p className="mt-2 text-base leading-relaxed text-ink/75">
-            En {business.name} preparamos tortas ahogadas con birote salado, salsa de
-            chile de árbol hecha en casa y carne de pierna, buche, cuero o lengua. La
-            torta cuesta {tortaPrice} y también entregamos a domicilio en el norte de{" "}
-            {business.address.locality}.
-          </p>
-          <div className="mt-5 flex flex-wrap gap-3">
-            <OrderLink
-              href={business.whatsapp(waMessages.general)}
-              channel="whatsapp"
-              location="guia_cierre"
-              size="lg"
-            >
-              Pedir por WhatsApp
-            </OrderLink>
-            <Link
-              href="/menu"
-              className="inline-flex h-13 items-center justify-center rounded-xl border-2 border-gold bg-white px-6 font-semibold text-ink transition-colors hover:bg-gold"
-            >
-              Ver el menú
-            </Link>
+        <aside className="mt-14 grid items-center gap-6 rounded-3xl border-2 border-ink bg-gold-soft p-6 shadow-stamp sm:grid-cols-[1fr_auto] md:p-8">
+          <div>
+            <h2 className="text-2xl text-chile">
+              Pruébala en {business.address.neighborhood}, {business.address.locality}
+            </h2>
+            <p className="mt-2 text-base leading-relaxed text-ink/75">
+              En {business.name} preparamos tortas ahogadas con birote salado, salsa de
+              chile de árbol hecha en casa y carne de pierna, buche, cuero o lengua. La
+              torta cuesta {tortaPrice} y también entregamos a domicilio en el norte de{" "}
+              {business.address.locality}.
+            </p>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <OrderLink
+                href={business.whatsapp(waMessages.general)}
+                channel="whatsapp"
+                location="guia_cierre"
+                size="lg"
+              >
+                Pedir por WhatsApp
+              </OrderLink>
+              <Link
+                href="/menu"
+                className="inline-flex h-13 items-center justify-center gap-2 rounded-full border-2 border-ink bg-white px-7 text-sm font-extrabold uppercase tracking-wide text-ink transition-colors hover:bg-gold"
+              >
+                Ver el menú
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
           </div>
+
+          {/*
+            Don Eddy hace de anfitrión al cerrar la guía. Un negocio con cara
+            detrás genera más confianza que uno anónimo, y para los buscadores
+            cuenta como señal de experiencia real.
+          */}
+          <FoodImage
+            src={images.personaje.src}
+            alt={images.personaje.alt}
+            aspect="1 / 1"
+            fit="contain"
+            tone="gold"
+            sizes="200px"
+            className="mx-auto w-36 shrink-0 sm:w-44"
+            fallbackIcon={<ChefHat className="h-14 w-14" aria-hidden="true" />}
+          />
         </aside>
       </article>
+
+      <FaqSection
+        items={faqGuia}
+        title={
+          <>
+            Otras dudas sobre
+            <span className="block text-chile">la torta ahogada</span>
+          </>
+        }
+        columns={1}
+      />
 
       <JsonLd
         data={graph(
@@ -257,6 +340,7 @@ export default function GuiaPage() {
             datePublished: PUBLICADO,
             dateModified: ACTUALIZADO,
           }),
+          faqNode({ path: "/que-es-una-torta-ahogada", items: faqGuia }),
           breadcrumbNode(TRAIL)
         )}
       />
@@ -264,9 +348,17 @@ export default function GuiaPage() {
   );
 }
 
-function Seccion({ titulo, children }: { titulo: string; children: React.ReactNode }) {
+function Seccion({
+  id,
+  titulo,
+  children,
+}: {
+  id: string;
+  titulo: string;
+  children: React.ReactNode;
+}) {
   return (
-    <section className="mt-10">
+    <section id={id} className="mt-12 scroll-mt-28">
       <h2 className="text-2xl md:text-3xl">{titulo}</h2>
       <div className="mt-3 grid gap-4 text-base leading-relaxed text-ink/80 [&_li]:ml-5 [&_li]:list-disc [&_ul]:grid [&_ul]:gap-2">
         {children}

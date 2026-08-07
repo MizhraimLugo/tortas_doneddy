@@ -19,7 +19,12 @@ import { formatPrice } from "@/data/menu";
  * que existen de verdad. Un "antes" inventado es, además de un bug, publicidad
  * engañosa.
  */
-export function Combos() {
+type CombosProps = {
+  /** Texto de entrada. Cambia según la página que lo aloja. */
+  intro?: string;
+};
+
+export function Combos({ intro }: CombosProps = {}) {
   const barato = Math.min(...combos.map((c) => c.promo));
   const caro = Math.max(...combos.map((c) => c.promo));
 
@@ -33,7 +38,10 @@ export function Combos() {
           title="Combos para compartir"
           tone="cream"
           align="center"
-          intro={`Cuatro paquetes con tortas ahogadas y tacos dorados, desde ${formatPrice(barato)} para dos personas hasta ${formatPrice(caro)} para dieciséis. Para la comida en familia, una reunión o un pedido de oficina.`}
+          intro={
+            intro ??
+            `Cuatro paquetes con tortas ahogadas y tacos dorados, desde ${formatPrice(barato)} para dos personas hasta ${formatPrice(caro)} para dieciséis. Para la comida en familia, una reunión o un pedido de oficina.`
+          }
         />
 
         <ul className="mt-12 grid gap-6 md:grid-cols-2">
@@ -53,7 +61,7 @@ export function Combos() {
 
                 <h3 className="pr-28 text-2xl text-chile">{combo.name}</h3>
                 <p className="mt-1 text-sm font-bold uppercase tracking-wide text-ink/55">
-                  Rinde para {combo.serves}
+                  Rinde para {combo.serves} · {combo.pieces} piezas
                 </p>
                 <p className="mt-2 text-sm text-ink/70">{combo.tagline}</p>
 
@@ -69,8 +77,13 @@ export function Combos() {
                   ))}
                 </ul>
 
-                {/* Precio: el tachado y el vigente, con el ahorro explícito. */}
-                <div className="mt-6 flex flex-wrap items-end gap-x-4 gap-y-1 border-t-2 border-dashed border-ink/20 pt-5">
+                {/*
+                  Precio: el tachado y el vigente, con el ahorro explícito.
+                  `mt-auto` empuja este bloque al fondo de la tarjeta para que
+                  los cuatro precios queden a la misma altura aunque un combo
+                  tenga el nombre más largo o más líneas incluidas.
+                */}
+                <div className="mt-auto flex flex-wrap items-end gap-x-4 gap-y-1 border-t-2 border-dashed border-ink/20 pt-5">
                   <span className="text-sm font-semibold text-ink/50">
                     De <span className="line-through">{formatPrice(combo.regular)}</span>
                   </span>
@@ -81,6 +94,16 @@ export function Combos() {
                     Ahorras {formatPrice(combo.savings)} · {combo.discountPct}%
                   </span>
                 </div>
+
+                {/*
+                  El precio por persona es el dato que decide la compra cuando
+                  alguien está comparando contra pedir platillos sueltos, y es
+                  también la forma en que se pregunta ("¿cuánto me sale por
+                  cabeza?"). Se calcula, no se captura.
+                */}
+                <p className="mt-2 text-sm font-semibold text-brand-green-dark">
+                  Sale en {formatPrice(combo.perPerson)} por persona
+                </p>
 
                 <div className="mt-5 grid grid-cols-2 gap-2">
                   <OrderLink

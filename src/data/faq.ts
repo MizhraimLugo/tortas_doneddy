@@ -18,11 +18,24 @@ import { business, fullAddress, serviceAreasText } from "./business";
 import { combos } from "./combos";
 import { findMenuItem, formatPrice } from "./menu";
 
+/**
+ * Página a la que pertenece cada pregunta.
+ *
+ * Sirve para que cada página interior muestre las dudas de SU tema en vez de
+ * repetir el mismo bloque en todo el sitio. Eso importa por dos razones: al
+ * lector le resuelve la duda donde le surge, y a los buscadores les da un
+ * `FAQPage` distinto por URL en vez de quince preguntas idénticas repetidas en
+ * cinco páginas, que se lee como contenido duplicado.
+ */
+export type FaqTopic = "menu" | "domicilio" | "guia";
+
 export type FaqItem = {
   q: string;
   a: string;
   /** Si es true, se incluye en el bloque destacado de la home. */
   featured?: boolean;
+  /** Páginas interiores donde tiene sentido mostrarla. */
+  topics?: FaqTopic[];
 };
 
 const tortaPrice = formatPrice(findMenuItem("torta-ahogada").price);
@@ -34,57 +47,69 @@ export const faq: FaqItem[] = [
     q: "¿Dónde están ubicadas las Tortas Ahogadas Don Eddy?",
     a: `${business.name} está en ${fullAddress}, en la zona norte de Zapopan, Jalisco. Estamos sobre Avenida Federalistas, en el Local 6, a unos minutos de Real Valdepeñas y Lomas de Zapopan.`,
     featured: true,
+    topics: ["domicilio"],
   },
   {
     q: "¿Cuál es el horario de Tortas Don Eddy?",
     a: `Abrimos de ${business.hours.range}, de ${business.hours.openDaysEs}. Los martes permanecemos cerrados.`,
     featured: true,
+    topics: ["menu", "domicilio"],
   },
   {
     q: "¿Hacen entregas a domicilio y en qué colonias?",
     a: `Sí, entregamos a domicilio en ${serviceAreasText}, en Zapopan. Puedes pedir por WhatsApp al ${business.phone.displayIntl}, por teléfono, o a través de Rappi y Uber Eats según disponibilidad.`,
     featured: true,
+    topics: ["domicilio"],
   },
   {
     q: "¿Cuánto cuesta una torta ahogada en Don Eddy?",
     a: `Una torta ahogada de pierna, buche o cuero cuesta ${tortaPrice} y la de lengua ${formatPrice(findMenuItem("torta-ahogada-lengua").price)}. La mini torta ahogada cuesta ${formatPrice(findMenuItem("mini-torta").price)} y los tacos dorados sencillos ${tacoPrice}. También manejamos combos desde ${formatPrice(comboBarato.promo)} para ${comboBarato.serves}.`,
     featured: true,
+    topics: ["menu"],
   },
   {
     q: "¿Cómo hago un pedido en Don Eddy?",
     a: `Puedes hacer tu pedido de tres formas: por WhatsApp al ${business.phone.displayIntl}, llamando al mismo número, o desde las aplicaciones de Rappi y Uber Eats. También puedes llegar directo al local en ${business.address.street}, ${business.address.neighborhood}, Zapopan.`,
     featured: true,
+    topics: ["menu", "domicilio"],
   },
   {
     q: "¿Qué es una torta ahogada?",
     a: "Una torta ahogada es un platillo tradicional de Guadalajara y Zapopan que consiste en un birote salado relleno de carne de cerdo, sumergido completamente en salsa de jitomate y acompañado de salsa de chile de árbol. Se come con las manos, sobre un plato hondo, y es el desayuno y la comida más representativa de Jalisco.",
     featured: true,
+    topics: ["guia"],
   },
   {
     q: "¿Las tortas ahogadas pican mucho?",
     a: "Tú decides cuánto pican. La salsa dulce de jitomate en la que se ahoga la torta no es picante; el picor viene de nuestra salsa de chile de árbol, que va aparte y se agrega al gusto. Si es tu primera vez, pídela poquita y ve subiéndole: la idea es que la disfrutes, no que te enchiles. Y si de plano no comes picante, pide tu torta solo con salsa dulce.",
     featured: true,
+    topics: ["menu", "guia"],
   },
   {
     q: "¿Qué hacen ustedes mismos en Don Eddy?",
     a: "Hacemos en casa el birote salado, las carnitas y las dos salsas. El pan lo horneamos el mismo día y la carne —pierna, buche y cuero— se prepara diario, nada se recalienta de un día para otro. La salsa dulce de jitomate es nuestra, y la salsa picante de chile de árbol es receta de la casa.",
     featured: true,
+    topics: ["menu", "guia"],
   },
   {
     q: "¿El birote es hecho en casa?",
     a: "Sí, horneamos nuestro propio birote salado todos los días. Es lo que hace que la torta aguante el caldillo sin deshacerse, cosa que un pan comprado no logra. También lo vendemos suelto por si quieres llevártelo.",
+    topics: ["menu", "guia"],
   },
   {
     q: "¿Qué carnes manejan para las tortas?",
     a: `Manejamos cuatro carnes: pierna, buche y cuero de cerdo a ${tortaPrice} la torta, y lengua de res a ${formatPrice(findMenuItem("torta-ahogada-lengua").price)}. Las mismas carnes están disponibles en mini torta y en tacos dorados.`,
+    topics: ["menu", "guia"],
   },
   {
     q: "¿Tienen opciones sin carne o vegetarianas?",
     a: `Sí. Los tacos dorados sencillos de frijol, papa o requesón no llevan carne y cuestan ${tacoPrice} cada uno. También vendemos birote salado suelto a ${formatPrice(findMenuItem("birote").price)}.`,
+    topics: ["menu"],
   },
   {
     q: "¿Qué es el birote salado y por qué importa?",
     a: "El birote salado es un pan de masa madre exclusivo de la zona de Guadalajara, con corteza dura y migajón firme, que es lo único que aguanta ser sumergido en salsa sin deshacerse. Sin birote salado no hay torta ahogada de verdad; en Don Eddy lo usamos siempre y también lo vendemos suelto.",
+    topics: ["guia"],
   },
   {
     q: "¿Tienen paquetes para fiestas o eventos?",
@@ -97,14 +122,17 @@ export const faq: FaqItem[] = [
       .concat(
         `. Todos incluyen tortas ahogadas y tacos dorados sencillos. Para pedidos grandes conviene apartar por WhatsApp al ${business.phone.displayIntl} con anticipación.`
       ),
+    topics: ["menu"],
   },
   {
     q: "¿Están en Rappi y Uber Eats?",
     a: "Sí, puedes encontrarnos en Rappi y en Uber Eats. Los precios y las promociones pueden variar entre plataformas por las comisiones de cada servicio; pedir directo por WhatsApp suele salir mejor.",
+    topics: ["menu", "domicilio"],
   },
   {
     q: "¿Venden cerveza?",
     a: `Sí, manejamos cerveza Corona en promoción 2×1 a ${formatPrice(findMenuItem("cerveza-corona").price)} y cerveza Modelo de 355 ml a ${formatPrice(findMenuItem("cerveza-modelo").price)}. También tenemos aguas frescas de jamaica y horchata, refrescos y agua natural.`,
+    topics: ["menu"],
   },
 ];
 
@@ -124,5 +152,10 @@ export const faq: FaqItem[] = [
  */
 export const faqPendienteVerificar: FaqItem[] = [];
 
-/** Preguntas destacadas para la home; el resto vive en la página de FAQ. */
+/** Preguntas destacadas para la portada. */
 export const featuredFaq = faq.filter((item) => item.featured);
+
+/** Preguntas de un tema, para el bloque de dudas de cada página interior. */
+export function faqByTopic(topic: FaqTopic): FaqItem[] {
+  return faq.filter((item) => item.topics?.includes(topic));
+}

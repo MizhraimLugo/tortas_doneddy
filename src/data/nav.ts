@@ -7,6 +7,17 @@
  * búsqueda propia (menú, domicilio y la guía) están aquí y no escondidas.
  */
 
+/**
+ * Dónde viven los paquetes.
+ *
+ * Los combos se muestran en dos páginas, pero solo una puede ser la dirección
+ * canónica que se publica en los datos estructurados, en el menú de navegación
+ * y en los enlaces internos. Es la del menú: ahí es donde alguien compara
+ * precios, y el enlace funciona igual desde cualquier página del sitio,
+ * mientras que `/#paquetes` obliga a volver a cargar la portada primero.
+ */
+export const PAQUETES_PATH = "/menu#paquetes";
+
 export type NavLink = {
   label: string;
   href: string;
@@ -16,7 +27,10 @@ export type NavLink = {
 
 export const navLinks: NavLink[] = [
   { label: "Menú", href: "/menu", title: "Menú completo con precios" },
-  { label: "Paquetes", href: "/#paquetes", title: "Combos y promociones" },
+  // Apunta a la página de menú, no a la portada: así el enlace funciona igual
+  // desde cualquier página. Con `/#paquetes` había que volver a cargar la
+  // portada entera para bajar a una sección que ya existe en /menu.
+  { label: "Paquetes", href: PAQUETES_PATH, title: "Combos y promociones" },
   {
     label: "Domicilio",
     href: "/tortas-ahogadas-a-domicilio-zapopan",

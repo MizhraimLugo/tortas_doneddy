@@ -135,9 +135,16 @@ export default function HomePage() {
       </section>
 
       {/*
-        El menú completo y las preguntas frecuentes se emiten como datos
-        estructurados aunque la página solo muestre una parte: un modelo que
-        rastree únicamente la portada obtiene igual todos los precios.
+        El menú completo sí se emite entero aunque la portada muestre solo tres
+        secciones: `Menu` no exige correspondencia con lo visible y así un
+        modelo que rastree únicamente la portada obtiene todos los precios.
+
+        Las preguntas frecuentes NO siguen esa regla. Google valida que un
+        `FAQPage` corresponda a preguntas visibles en esa misma URL y descarta
+        el bloque cuando declara de más, así que aquí van solo las destacadas.
+        El resto está publicado en las páginas de su tema —menú, domicilio y la
+        guía— y las quince completas viajan en /llms.txt, que es el canal
+        pensado para los modelos.
       */}
       <JsonLd
         data={graph(
@@ -148,7 +155,7 @@ export default function HomePage() {
               "Tortas ahogadas, tacos dorados y bebidas en La Cima, Zapopan. Menú, precios, paquetes y entrega a domicilio.",
           }),
           menuNode(),
-          faqNode()
+          faqNode({ path: "/", items: featuredFaq })
         )}
       />
     </>

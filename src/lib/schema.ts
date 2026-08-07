@@ -19,6 +19,7 @@ import { combos, comboSummary } from "@/data/combos";
 import { faq } from "@/data/faq";
 import { images, schemaImages } from "@/data/images";
 import { menu, maxPrice, minPrice } from "@/data/menu";
+import { PAQUETES_PATH } from "@/data/nav";
 
 // ── Identificadores estables del grafo ───────────────────────────────────────
 export const ID = {
@@ -152,7 +153,7 @@ export function restaurantNode() {
       price: combo.promo,
       priceCurrency: business.currency,
       availability: "https://schema.org/InStock",
-      url: absolute("/#paquetes"),
+      url: absolute(PAQUETES_PATH),
       eligibleQuantity: { "@type": "QuantitativeValue", value: 1 },
     })),
 
@@ -216,14 +217,25 @@ export function menuNode() {
 }
 
 // ── Preguntas frecuentes ─────────────────────────────────────────────────────
-export function faqNode() {
+/**
+ * El `@id` tiene que apuntar a la URL donde las preguntas se ven de verdad.
+ *
+ * Antes estaba fijo en `/preguntas-frecuentes#faq`, una ruta que no existe en
+ * el sitio: Google valida que el `FAQPage` corresponda a contenido visible en
+ * esa URL y, al no encontrarla, descarta el bloque entero. Ahora cada página
+ * declara su propia ruta y solo las preguntas que realmente muestra.
+ */
+export function faqNode(opts: { path: string; items?: typeof faq } = { path: "/" }) {
+  const items = opts.items ?? faq;
+
   return {
     "@type": "FAQPage",
-    "@id": absolute("/preguntas-frecuentes#faq"),
+    "@id": `${absolute(opts.path)}#faq`,
+    url: `${absolute(opts.path)}#faq`,
     inLanguage: "es-MX",
     isPartOf: { "@id": ID.website },
     about: { "@id": ID.restaurant },
-    mainEntity: faq.map((item) => ({
+    mainEntity: items.map((item) => ({
       "@type": "Question",
       name: item.q,
       acceptedAnswer: { "@type": "Answer", text: item.a },

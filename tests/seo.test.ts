@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 
 import { SITE_URL, business, fullAddress, serviceAreasText } from "@/data/business";
-import { combos } from "@/data/combos";
+import { comboMasRendidor, combos } from "@/data/combos";
 import { faq } from "@/data/faq";
 import { allMenuItems, findMenuItem } from "@/data/menu";
-import { indexablePages, sitePages } from "@/data/nav";
+import { PAQUETES_PATH, indexablePages, navLinks, sitePages } from "@/data/nav";
 import { faqNode, graph, menuNode, restaurantNode, websiteNode } from "@/lib/schema";
 
 /**
@@ -55,6 +55,34 @@ describe("consistencia de precios", () => {
         porTorta[i].unit,
         `${porTorta[i].name} cuesta más por torta que ${porTorta[i - 1].name}`
       ).toBeLessThanOrEqual(porTorta[i - 1].unit);
+    }
+  });
+
+  it("el precio por persona baja conforme crece el paquete", () => {
+    // La página anuncia cuál es "el más rendidor" y muestra el precio por
+    // persona en cada tarjeta. Si un paquete grande saliera más caro por cabeza
+    // que uno chico, esa promesa sería falsa y estaría a la vista, comparable de
+    // un vistazo entre las cuatro tarjetas.
+    const escalera = [...combos].sort((a, b) => a.servesCount - b.servesCount);
+
+    for (let i = 1; i < escalera.length; i++) {
+      expect(
+        escalera[i].perPerson,
+        `${escalera[i].name} sale más caro por persona que ${escalera[i - 1].name}`
+      ).toBeLessThanOrEqual(escalera[i - 1].perPerson);
+    }
+  });
+
+  it("el paquete anunciado como más rendidor lo es de verdad", () => {
+    const minimo = Math.min(...combos.map((c) => c.perPerson));
+    expect(comboMasRendidor.perPerson).toBe(minimo);
+  });
+
+  it("el precio por persona y las piezas se derivan del paquete", () => {
+    for (const combo of combos) {
+      expect(combo.perPerson).toBe(Math.round(combo.promo / combo.servesCount));
+      expect(combo.pieces).toBe(combo.lines.reduce((t, l) => t + l.qty, 0));
+      expect(combo.serves).toBe(`${combo.servesCount} personas`);
     }
   });
 
@@ -156,6 +184,27 @@ describe("datos estructurados", () => {
     });
   });
 
+  it("el @id del FAQ apunta a la página donde las preguntas se ven", () => {
+    // Estuvo fijo en /preguntas-frecuentes#faq, una ruta que no existe en el
+    // sitio. Google comprueba que el FAQPage corresponda a contenido visible en
+    // esa URL y, al no encontrarla, descarta el bloque completo.
+    for (const page of indexablePages) {
+      const node = faqNode({ path: page.path, items: faq.slice(0, 2) });
+      // La portada queda como ".mx/#faq": misma forma que los demás @id del
+      // grafo (ver `ID.restaurant`), y para una URL la barra final es
+      // equivalente a omitirla.
+      expect(node["@id"]).toBe(`${SITE_URL}${page.path}#faq`);
+      expect(node.mainEntity).toHaveLength(2);
+    }
+  });
+
+  it("cada pregunta se muestra en alguna página del sitio", () => {
+    // Una pregunta sin `featured` ni `topics` solo existiría en llms.txt: se
+    // habría escrito para nada y ninguna página la respondería.
+    const huerfanas = faq.filter((item) => !item.featured && !item.topics?.length);
+    expect(huerfanas.map((i) => i.q)).toEqual([]);
+  });
+
   it("los nodos del grafo se referencian entre sí por @id", () => {
     const restaurant = data["@graph"].find((n) => n["@type"] === "Restaurant");
     const menuGraph = data["@graph"].find((n) => n["@type"] === "Menu");
@@ -223,6 +272,30 @@ describe("contenido para buscadores y modelos", () => {
   it("no hay preguntas duplicadas en el FAQ", () => {
     const questions = faq.map((item) => item.q.toLowerCase());
     expect(new Set(questions).size).toBe(questions.length);
+  });
+
+  it("cada enlace del menú apunta a una página que existe", () => {
+    // El enlace de "Paquetes" apuntaba a /#paquetes, un ancla de la portada.
+    // Funcionaba, pero obligaba a recargar la portada entera desde cualquier
+    // página interior para bajar a una sección que también vive en /menu. Este
+    // test cubre además el caso peor: un enlace del menú a una ruta borrada,
+    // que sería un 404 repetido en todas las páginas del sitio.
+    const rutas = new Set(sitePages.map((p) => p.path));
+
+    for (const link of navLinks) {
+      const [ruta] = link.href.split("#");
+      // Un href que es solo ancla ("#faq") apunta a la página actual.
+      if (ruta === "") continue;
+      expect(rutas.has(ruta), `"${link.label}" apunta a ${link.href}, que no existe`).toBe(
+        true
+      );
+    }
+  });
+
+  it("los paquetes viven en una página real del sitio", () => {
+    const [ruta, ancla] = PAQUETES_PATH.split("#");
+    expect(sitePages.some((p) => p.path === ruta)).toBe(true);
+    expect(ancla).toBe("paquetes");
   });
 
   it("el sitemap no tiene rutas repetidas y todas empiezan con /", () => {
