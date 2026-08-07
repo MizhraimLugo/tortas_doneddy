@@ -56,7 +56,7 @@ export default function GuiaPage() {
 
   return (
     <>
-      <article className="mx-auto max-w-3xl px-4 py-10 md:py-14">
+      <article className="shell shell-narrow py-10 md:py-14">
         <Breadcrumbs trail={TRAIL} />
 
         <h1 className="mt-5 text-4xl md:text-5xl">

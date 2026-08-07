@@ -47,7 +47,7 @@ export function Antojos() {
   ];
 
   return (
-    <section className="mx-auto max-w-6xl px-4 py-16 md:py-20">
+    <section className="shell py-16 md:py-20">
       <SectionHeading
         eyebrow="Antojos principales"
         title="Lo que sale de la plancha"

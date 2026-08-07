@@ -107,6 +107,27 @@
 }
 
 @layer utilities {
+  /**
+   * Contenedor del sitio.
+   *
+   * El margen lateral crece con el viewport en vez de quedarse fijo en 16 px.
+   * Con `px-4` constante, en una laptop el texto arrancaba a 16 px del borde de
+   * la pantalla y se veía apretado y barato. El `clamp` lo resuelve sin
+   * breakpoints: 1 rem en móvil, hasta 2 rem en pantallas grandes.
+   */
+  .shell {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 72rem;
+    padding-inline: clamp(1rem, 4vw, 2rem);
+  }
+  .shell-mid {
+    max-width: 56rem;
+  }
+  .shell-narrow {
+    max-width: 48rem;
+  }
+
   /* Enlace de salto: solo visible al recibir foco por teclado. */
   .skip-link {
     position: absolute;

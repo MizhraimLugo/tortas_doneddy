@@ -36,7 +36,7 @@ export const metadata = buildMetadata({
 export default function MenuPage() {
   return (
     <>
-      <div className="mx-auto max-w-6xl px-4 py-10 md:py-14">
+      <div className="shell py-10 md:py-14">
         <Breadcrumbs trail={TRAIL} />
 
         <h1 className="mt-5 text-4xl md:text-5xl">

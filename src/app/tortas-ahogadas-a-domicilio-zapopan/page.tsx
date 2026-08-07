@@ -69,7 +69,7 @@ export default function DomicilioPage() {
 
   return (
     <>
-      <div className="mx-auto max-w-4xl px-4 py-10 md:py-14">
+      <div className="shell shell-mid py-10 md:py-14">
         <Breadcrumbs trail={TRAIL} />
 
         <h1 className="mt-5 text-4xl md:text-5xl">

@@ -27,7 +27,7 @@ export function Combos() {
     <section id="paquetes" className="relative isolate bg-chile py-16 text-cream md:py-20">
       <span aria-hidden="true" className="grain absolute inset-0" />
 
-      <div className="relative mx-auto max-w-6xl px-4">
+      <div className="relative shell">
         <SectionHeading
           eyebrow="Paquetes y promociones"
           title="Combos para compartir"

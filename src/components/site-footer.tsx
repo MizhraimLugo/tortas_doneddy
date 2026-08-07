@@ -28,7 +28,7 @@ export function SiteFooter() {
       <span aria-hidden="true" className="grain absolute inset-0" />
 
       {/* pb extra en móvil para que la barra fija de pedido no tape el contenido */}
-      <div className="relative mx-auto max-w-6xl px-4 pb-28 pt-10 md:pb-14">
+      <div className="relative shell pb-28 pt-10 md:pb-14">
         <div className="grid gap-10 md:grid-cols-3">
           <div>
             <div className="flex items-center gap-3">

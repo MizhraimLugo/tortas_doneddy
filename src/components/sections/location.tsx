@@ -17,8 +17,10 @@ import { business, fullAddress, serviceAreasText, waMessages } from "@/data/busi
  */
 export function Location() {
   return (
-    <section id="ubicacion" className="mx-auto max-w-6xl px-4 py-16 md:py-20">
-      <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+    // Banda tintada: rompe la racha de secciones crema que venía después de los
+    // combos y le devuelve ritmo vertical a la página.
+    <section id="ubicacion" className="bg-cream-deep/60 py-16 md:py-20">
+      <div className="shell grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <div>
           <SectionHeading
             eyebrow="Dónde estamos"
@@ -72,7 +74,12 @@ export function Location() {
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-3xl border-2 border-ink bg-white p-2 shadow-stamp">
+        {/*
+          Fondo crema y no blanco: si Google Maps tarda, falla o queda
+          bloqueado por una extensión, el hueco se lee como un panel del sitio
+          y no como un rectángulo blanco roto.
+        */}
+        <div className="overflow-hidden rounded-3xl border-2 border-ink bg-gold-soft p-2 shadow-stamp">
           <iframe
             title={`Mapa con la ubicación de ${business.name} en ${business.address.locality}`}
             src={business.links.googleMapsEmbed}

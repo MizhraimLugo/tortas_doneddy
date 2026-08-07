@@ -19,7 +19,7 @@ import { business, serviceAreasText, waMessages } from "@/data/business";
  */
 export function Delivery() {
   return (
-    <section id="domicilio" className="mx-auto max-w-6xl px-4 py-16 md:py-20">
+    <section id="domicilio" className="shell py-16 md:py-20">
       <SectionHeading
         eyebrow="A domicilio"
         title={

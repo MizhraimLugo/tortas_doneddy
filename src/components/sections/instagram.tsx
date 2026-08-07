@@ -47,7 +47,7 @@ const POSTS = [
 
 export function Instagram() {
   return (
-    <section id="instagram" className="mx-auto max-w-6xl px-4 pb-16 md:pb-20">
+    <section id="instagram" className="shell pb-16 md:pb-20">
       <div className="rounded-3xl border-2 border-ink bg-gold-soft p-6 shadow-stamp md:p-10">
         <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>

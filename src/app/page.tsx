@@ -51,7 +51,7 @@ export default function HomePage() {
       <Antojos />
 
       <section id="menu" className="bg-cream-deep/50 py-16 md:py-20">
-        <div className="mx-auto max-w-6xl px-4">
+        <div className="shell">
           <SectionHeading
             eyebrow="Menú"
             title="Todo se hace al momento"
@@ -92,7 +92,7 @@ export default function HomePage() {
       />
 
       {/* Puente hacia la guía: convierte tráfico informativo en clientes. */}
-      <section className="mx-auto max-w-4xl px-4 pb-20">
+      <section className="shell shell-mid pb-20">
         <div className="rounded-3xl border-2 border-ink bg-gold p-7 shadow-stamp md:p-10">
           <h2 className="text-[clamp(1.6rem,3.5vw,2.25rem)] text-chile">
             ¿Nunca has comido una torta ahogada?

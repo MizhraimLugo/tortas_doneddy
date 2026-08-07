@@ -53,8 +53,19 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav aria-label="Navegación principal" className="hidden xl:block">
-          <ul className="flex items-center gap-6">
+        {/*
+          Escalera de responsive. Antes la navegación aparecía hasta `xl` pero
+          los botones desde `md`, así que entre 768 y 1279 px —todo iPad y las
+          laptops chicas— se veían los dos botones Y la hamburguesa al mismo
+          tiempo, sin menú. Ahora cada pieza entra en su punto:
+
+            < md    logo + hamburguesa
+            md–lg   logo + WhatsApp + hamburguesa
+            lg      logo + navegación + WhatsApp   (sin hamburguesa)
+            xl      logo + navegación + teléfono + WhatsApp
+        */}
+        <nav aria-label="Navegación principal" className="hidden lg:block">
+          <ul className="flex items-center gap-4 xl:gap-6">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
@@ -70,16 +81,18 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-2 md:flex">
-          <OrderLink
-            href={business.phone.telHref}
-            channel="telefono"
-            location="header"
-            variant="outline"
-            ariaLabel={`Llamar al ${business.phone.displayIntl}`}
-          >
-            <Phone className="h-4 w-4" aria-hidden="true" />
-            {business.phone.display}
-          </OrderLink>
+          <div className="hidden xl:block">
+            <OrderLink
+              href={business.phone.telHref}
+              channel="telefono"
+              location="header"
+              variant="outline"
+              ariaLabel={`Llamar al ${business.phone.displayIntl}`}
+            >
+              <Phone className="h-4 w-4" aria-hidden="true" />
+              {business.phone.display}
+            </OrderLink>
+          </div>
 
           <OrderLink
             href={business.whatsapp(waMessages.general)}
@@ -92,7 +105,7 @@ export function SiteHeader() {
 
         <button
           type="button"
-          className="inline-flex items-center justify-center rounded-xl border-2 border-ink bg-white p-2.5 shadow-stamp active:translate-x-[3px] active:translate-y-[3px] active:shadow-none xl:hidden"
+          className="inline-flex items-center justify-center rounded-xl border-2 border-ink bg-white p-2.5 shadow-stamp active:translate-x-[3px] active:translate-y-[3px] active:shadow-none lg:hidden"
           onClick={() => setOpen((value) => !value)}
           // El estado debe anunciarse: la versión original tenía la etiqueta
           // fija en "Abrir menú" incluso estando el menú abierto.
@@ -109,8 +122,8 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <div id="menu-movil" className="border-t-2 border-ink bg-white xl:hidden">
-          <nav aria-label="Navegación móvil" className="mx-auto max-w-6xl px-4 py-4">
+        <div id="menu-movil" className="border-t-2 border-ink bg-white lg:hidden">
+          <nav aria-label="Navegación móvil" className="shell py-4">
             <ul className="grid gap-1">
               {navLinks.map((link) => (
                 <li key={link.href}>

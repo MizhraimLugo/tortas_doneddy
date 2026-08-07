@@ -23,7 +23,14 @@ export function Hero() {
     <section className="relative isolate bg-chile text-cream">
       <span aria-hidden="true" className="grain absolute inset-0" />
 
-      <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 pb-16 pt-12 md:pb-20 md:pt-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
+      {/*
+        Entrada escalonada al cargar. Es el único momento de la página con
+        movimiento, y a propósito: una secuencia bien orquestada en la primera
+        impresión rinde más que micro-animaciones repartidas por todos lados.
+        La regla `prefers-reduced-motion` de globals.css la anula por completo
+        para quien la tenga activada.
+      */}
+      <div className="shell relative grid items-center gap-10 pb-16 pt-12 md:pb-20 md:pt-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
         <div>
           <h1 className="text-[clamp(2.3rem,4.6vw,3.6rem)]">
             {/*
@@ -31,18 +38,20 @@ export function Hero() {
               Visualmente domina el eslogan; para un buscador, el h1 empieza
               con "Tortas ahogadas en Zapopan".
             */}
-            <span className="mb-4 block font-sans text-[0.3em] font-extrabold uppercase leading-tight tracking-[0.2em] text-gold">
+            <span className="rise mb-4 block font-sans text-[0.3em] font-extrabold uppercase leading-tight tracking-[0.2em] text-gold">
               Tortas ahogadas en Zapopan · desde {business.founded}
             </span>
-            <span className="block text-balance">Tú pones el hambre,</span>
-            <span className="block text-balance text-gold">
+            <span className="rise block text-balance [animation-delay:90ms]">
+              Tú pones el hambre,
+            </span>
+            <span className="rise block text-balance text-gold [animation-delay:180ms]">
               nosotros ponemos las tortas
             </span>
           </h1>
 
           <p
             data-speakable
-            className="mt-6 max-w-xl text-lg leading-relaxed text-cream/90"
+            className="rise mt-6 max-w-xl text-lg leading-relaxed text-cream/90 [animation-delay:280ms]"
           >
             Tortas ahogadas de pierna, buche, cuero y lengua con birote salado y
             salsa de chile de árbol, desde {tortaPrice}, en{" "}
@@ -50,7 +59,7 @@ export function Hero() {
             {business.hours.range} y llevamos a domicilio.
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="rise mt-8 flex flex-wrap gap-3 [animation-delay:380ms]">
             <OrderLink
               href={business.whatsapp(waMessages.general)}
               channel="whatsapp"
@@ -69,7 +78,7 @@ export function Hero() {
             </Link>
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
+          <div className="rise mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm [animation-delay:460ms]">
             <span className="font-semibold text-cream/70">También en</span>
             <OrderLink
               href={business.links.rappi}
@@ -94,7 +103,7 @@ export function Hero() {
         </div>
 
         {/* Foto principal, ligeramente girada como una foto clavada al muro. */}
-        <div className="relative mx-auto w-full max-w-sm lg:max-w-md">
+        <div className="rise relative mx-auto w-full max-w-sm [animation-delay:220ms] lg:max-w-md">
           <div className="rotate-[1.5deg] rounded-[2rem] border-4 border-gold bg-gold p-2 shadow-[10px_10px_0_0_var(--color-chile-deep)]">
             <FoodImage
               src="/brand/torta-ahogada-don-eddy.jpg"
