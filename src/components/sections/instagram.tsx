@@ -17,7 +17,13 @@ import { images } from "@/data/images";
  * local, se agrega aquí y la retícula pasa a cuatro.
  */
 
-const POSTS = [images.tortaAhogada, images.tacosDorados, images.personaje];
+const POSTS = [
+  { ...images.tortaAhogada, focus: "center" },
+  { ...images.tacosDorados, focus: "center" },
+  // El personaje es vertical: en el recorte cuadrado hay que anclar arriba para
+  // no cortarle la cabeza.
+  { ...images.personaje, focus: "center top" },
+];
 
 export function Instagram() {
   return (
@@ -58,6 +64,7 @@ export function Instagram() {
                   src={post.src}
                   alt={post.alt}
                   aspect="1 / 1"
+                  focus={post.focus}
                   sizes="(max-width: 640px) 100vw, 360px"
                 />
               </div>

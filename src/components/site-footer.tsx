@@ -35,7 +35,7 @@ export function SiteFooter() {
               <BrandLogo height={52} />
               <span>
                 <span className="block font-display text-xl leading-tight">
-                  {business.name}
+                  {business.fullName}
                 </span>
                 <span className="block text-sm text-gold">
                   Tradición, sabor y calidad

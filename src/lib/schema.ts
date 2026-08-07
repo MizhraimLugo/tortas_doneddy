@@ -48,7 +48,14 @@ export function restaurantNode() {
     "@type": "Restaurant",
     "@id": ID.restaurant,
     name: business.name,
-    alternateName: ["Tortas Don Eddy", "Don Eddy Zapopan"],
+    // Variantes con las que la gente busca y nombra al negocio. Incluye la
+    // línea de tacos dorados, que es media carta y una consulta propia.
+    alternateName: [
+      business.fullName,
+      "Tortas Don Eddy",
+      "Don Eddy Zapopan",
+      "Tacos Dorados Don Eddy",
+    ],
     description: business.description,
     url: SITE_URL,
 

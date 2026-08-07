@@ -119,7 +119,9 @@ export function FoodImage({
           fill
           sizes={sizes}
           priority={priority}
-          quality={82}
+          // Debe ser uno de los valores declarados en `images.qualities` de
+          // next.config.ts; si no, el optimizador responde 400.
+          quality={85}
           className={fit === "contain" ? "object-contain" : "object-cover"}
           style={{ objectPosition: focus }}
           onError={fail}

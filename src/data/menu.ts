@@ -43,7 +43,7 @@ export const menu: MenuSection[] = [
     title: "Tortas ahogadas",
     subtitle: "Birote salado · 100 g de carne",
     description:
-      "La clásica de Jalisco: birote salado relleno de carne, bañado en salsa de jitomate y coronado con chile de árbol al gusto. Tú decides qué tan ahogada y qué tan picante.",
+      "La clásica de Jalisco, con birote salado y carnitas hechos en casa el mismo día. Va bañada en nuestra salsa dulce de jitomate y coronada con salsa de chile de árbol al gusto: tú decides qué tan ahogada y qué tan picante.",
     items: [
       {
         id: "torta-ahogada",
@@ -52,7 +52,7 @@ export const menu: MenuSection[] = [
         serving: "100 g",
         options: [...CARNES],
         description:
-          "Birote salado con pierna, buche o cuero de cerdo, ahogado en salsa de jitomate con chile de árbol.",
+          "Birote salado recién horneado en casa, relleno de pierna, buche o cuero preparados el mismo día, ahogado en salsa dulce de jitomate.",
         popular: true,
       },
       {
@@ -140,7 +140,7 @@ export const menu: MenuSection[] = [
         name: "Birote salado",
         price: 12,
         description:
-          "El pan que hace la torta ahogada: corteza dura, migajón firme y sabor salado. También se vende suelto.",
+          "El pan que hace la torta ahogada, horneado por nosotros el mismo día: corteza dura, migajón firme y sabor salado. También se vende suelto para llevar.",
       },
     ],
   },

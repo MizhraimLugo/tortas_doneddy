@@ -42,14 +42,15 @@ export function SiteHeader() {
           className="flex items-center gap-3"
           aria-label={`${business.name} — inicio`}
         >
-          <BrandLogo height={50} priority />
-          <span className="leading-none">
-            <span className="block text-[0.6rem] font-extrabold uppercase tracking-[0.2em] text-brand-red-dark">
-              Tortas Ahogadas
-            </span>
-            <span className="mt-1 block font-display text-xl tracking-tight sm:text-2xl">
-              Don Eddy
-            </span>
+          {/*
+            El logotipo real ya dice "Tortas ahogadas · Don Eddy · y tacos
+            dorados", así que repetirlo al lado era redundante y en móvil partía
+            en dos líneas encima del logo. Se conserva solo el nombre corto,
+            que a este tamaño sí se lee mejor como texto que dentro del óvalo.
+          */}
+          <BrandLogo height={54} priority />
+          <span className="hidden font-display text-xl leading-none tracking-tight sm:block">
+            Don Eddy
           </span>
         </Link>
 

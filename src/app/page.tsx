@@ -8,6 +8,7 @@ import { Antojos } from "@/components/sections/antojos";
 import { Combos } from "@/components/sections/combos";
 import { Delivery } from "@/components/sections/delivery";
 import { FaqSection } from "@/components/sections/faq-section";
+import { HechoEnCasa } from "@/components/sections/hecho-en-casa";
 import { Hero } from "@/components/sections/hero";
 import { Instagram } from "@/components/sections/instagram";
 import { Location } from "@/components/sections/location";
@@ -30,15 +31,16 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   path: "/",
   absoluteTitle: true,
-  title: "Tortas Ahogadas en Zapopan a Domicilio | Don Eddy",
+  title: "Tortas Ahogadas y Tacos Dorados en Zapopan | Don Eddy",
   description:
-    "Tortas ahogadas de pierna, buche, cuero y lengua con birote salado en La Cima, Zapopan. Desde $75. Pide por WhatsApp o a domicilio. Abrimos de 9:00 a 16:00 h.",
+    "Tortas ahogadas con birote salado y tacos dorados de frijol, papa o requesón en La Cima, Zapopan. Desde $75. Pide por WhatsApp o a domicilio, de 9:00 a 16:00 h.",
   keywords: [
     "tortas ahogadas Zapopan",
+    "tacos dorados Zapopan",
     "tortas ahogadas a domicilio",
+    "tacos dorados a domicilio Zapopan",
     "tortas ahogadas La Cima",
     "birote salado Zapopan",
-    "tacos dorados Zapopan",
     "comida jalisciense Zapopan",
   ],
 });
@@ -77,6 +79,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      <HechoEnCasa />
       <Combos />
       <Delivery />
       <Location />

@@ -62,7 +62,17 @@ export const faq: FaqItem[] = [
   },
   {
     q: "¿Las tortas ahogadas pican mucho?",
-    a: "Tú decides cuánto pican. La salsa de jitomate en la que se ahoga la torta no es picante; el picor viene de la salsa de chile de árbol, que se sirve aparte o se agrega al gusto. Si no comes picante, pide tu torta solo con salsa de jitomate.",
+    a: "Tú decides cuánto pican. La salsa dulce de jitomate en la que se ahoga la torta no es picante; el picor viene de nuestra salsa de chile de árbol, que va aparte y se agrega al gusto. Si es tu primera vez, pídela poquita y ve subiéndole: la idea es que la disfrutes, no que te enchiles. Y si de plano no comes picante, pide tu torta solo con salsa dulce.",
+    featured: true,
+  },
+  {
+    q: "¿Qué hacen ustedes mismos en Don Eddy?",
+    a: "Hacemos en casa el birote salado, las carnitas y las dos salsas. El pan lo horneamos el mismo día y la carne —pierna, buche y cuero— se prepara diario, nada se recalienta de un día para otro. La salsa dulce de jitomate es nuestra, y la salsa picante de chile de árbol es receta de la casa.",
+    featured: true,
+  },
+  {
+    q: "¿El birote es hecho en casa?",
+    a: "Sí, horneamos nuestro propio birote salado todos los días. Es lo que hace que la torta aguante el caldillo sin deshacerse, cosa que un pan comprado no logra. También lo vendemos suelto por si quieres llevártelo.",
   },
   {
     q: "¿Qué carnes manejan para las tortas?",

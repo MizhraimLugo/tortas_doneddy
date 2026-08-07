@@ -39,8 +39,8 @@ export function Hero() {
               Visualmente domina el eslogan; para un buscador, el h1 empieza
               con "Tortas ahogadas en Zapopan".
             */}
-            <span className="rise mb-4 block font-sans text-[0.3em] font-extrabold uppercase leading-tight tracking-[0.2em] text-gold">
-              Tortas ahogadas en Zapopan · desde {business.founded}
+            <span className="rise mb-4 block text-balance font-sans text-[0.3em] font-extrabold uppercase leading-tight tracking-[0.18em] text-gold">
+              Tortas ahogadas y tacos dorados en {business.address.locality}
             </span>
             <span className="rise block text-balance [animation-delay:90ms]">
               Tú pones el hambre,
@@ -54,9 +54,9 @@ export function Hero() {
             data-speakable
             className="rise mt-6 max-w-xl text-lg leading-relaxed text-cream/90 [animation-delay:280ms]"
           >
-            Tortas ahogadas de pierna, buche, cuero y lengua con birote salado y
-            salsa de chile de árbol, desde {tortaPrice}, en{" "}
-            {business.address.neighborhood}, {business.address.locality}. Abrimos de{" "}
+            Tortas ahogadas de pierna, buche, cuero y lengua desde {tortaPrice}, en{" "}
+            {business.address.neighborhood}, {business.address.locality}. El birote
+            salado y las carnitas los hacemos en casa el mismo día. Abrimos de{" "}
             {business.hours.range} y llevamos a domicilio.
           </p>
 

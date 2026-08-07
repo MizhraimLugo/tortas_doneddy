@@ -25,25 +25,42 @@ const PHONE_E164 = "+523347543255";
 const PHONE_DIGITS = PHONE_E164.replace(/\D/g, "");
 
 export const business = {
+  /**
+   * Nombre corto. Debe coincidir EXACTAMENTE con el de la ficha de Google
+   * Business Profile: la consistencia entre ficha, sitio y directorios es de
+   * los factores más pesados del posicionamiento local, y una variación cuenta
+   * como inconsistencia.
+   */
   name: "Tortas Ahogadas Don Eddy",
   shortName: "Don Eddy",
+
+  /**
+   * Nombre completo tal como aparece en el logotipo. Se usa en títulos y como
+   * `alternateName` en los datos estructurados, para que "tacos dorados" —que
+   * es media línea de negocio— también sea una vía de entrada.
+   */
+  fullName: "Tortas Ahogadas y Tacos Dorados Don Eddy",
   legalName: "Tortas Ahogadas Don Eddy",
 
   /** Descripción base reutilizada en metadatos y datos estructurados. */
   description:
-    "Tortas ahogadas de pierna, buche, cuero y lengua con birote salado y salsa de chile de árbol, en La Cima, Zapopan. Comemos aquí o te lo llevamos a domicilio.",
+    "Tortas ahogadas y tacos dorados en La Cima, Zapopan. El birote salado y las carnitas los hacemos en casa el mismo día, y las dos salsas son nuestras. Comes aquí o te lo llevamos a domicilio.",
 
   /**
-   * Año de apertura. Se emite como `foundingDate` en el JSON-LD y es una señal
-   * de confianza (E-E-A-T) fuerte para un negocio local: "desde 1995" pesa más
-   * que un sitio sin historia, y los motores de IA lo citan al describir el
-   * negocio.
+   * Año de apertura. Vacío a propósito.
    *
-   * TODO(negocio): confirmar. Se toma de "DESDE 1995", que aparece dentro del
-   * logo y en la portada del diseño de referencia. Si el año no es correcto,
-   * cámbialo aquí y se actualiza en todo el sitio.
+   * El "DESDE 1995" venía del logotipo del diseño de referencia, pero el
+   * logotipo real del negocio no lo incluye y el dato no está confirmado, así
+   * que se retiró: publicar un año de fundación falso es una afirmación falsa
+   * sobre el negocio, y va en el JSON-LD como `foundingDate`.
+   *
+   * TODO(negocio): si se confirma el año real, basta escribirlo aquí. Todo el
+   * sitio lo recoge solo —portada, pie, imagen de vista previa y datos
+   * estructurados— porque cada uso ya está condicionado a que exista.
+   * "Desde 20XX" es una señal de confianza fuerte para un negocio local y vale
+   * la pena recuperarla.
    */
-  founded: "1995" as string,
+  founded: "" as string,
 
   // ── Dirección (NAP) ────────────────────────────────────────────────────────
   address: {
@@ -145,7 +162,7 @@ export const business = {
 
   priceRange: "$$",
   currency: "MXN",
-  cuisine: ["Mexicana", "Tortas ahogadas", "Comida jalisciense"],
+  cuisine: ["Mexicana", "Tortas ahogadas", "Tacos dorados", "Comida jalisciense"],
 
   // TODO(negocio): confirmar formas de pago aceptadas (efectivo, terminal,
   // transferencia) y agregarlas aquí. Se emitirán como `paymentAccepted` en el

@@ -1,4 +1,5 @@
 import { SITE_URL, business, fullAddress, serviceAreasText } from "@/data/business";
+import { hechoEnCasa } from "@/data/casa";
 import { combos } from "@/data/combos";
 import { faq } from "@/data/faq";
 import { formatPrice, menu } from "@/data/menu";
@@ -46,6 +47,17 @@ function buildLlmsTxt(): string {
   lines.push(`- **Rango de precios**: ${business.priceRange} (moneda: ${business.currency})`);
   lines.push(`- **Google Maps**: ${business.links.googleMaps}`);
   lines.push(`- **Instagram**: ${business.links.instagram}`);
+  lines.push("");
+
+  lines.push("## Lo que se hace en casa");
+  lines.push("");
+  lines.push(
+    "Es el diferenciador del negocio frente a otros puestos de tortas ahogadas:"
+  );
+  lines.push("");
+  for (const item of hechoEnCasa) {
+    lines.push(`- **${item.titulo}** (${item.sello}): ${item.texto}`);
+  }
   lines.push("");
 
   lines.push("## Menú completo con precios");

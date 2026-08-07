@@ -141,6 +141,12 @@ export default function GuiaPage() {
             en otra ciudad casi siempre choca con el mismo problema: sin birote salado no
             sale igual.
           </p>
+          <p>
+            En {business.name} lo horneamos nosotros mismos todos los días, igual que
+            las carnitas, y las dos salsas también son de la casa. Por eso el birote
+            llega firme a la mesa: recién hecho aguanta el caldillo sin volverse
+            esponja.
+          </p>
         </Seccion>
 
         <Seccion titulo="¿Cómo se come una torta ahogada?">

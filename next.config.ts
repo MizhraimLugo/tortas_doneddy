@@ -7,6 +7,12 @@ const nextConfig: NextConfig = {
   // imágenes a un CDN, agrégalo aquí en `images.remotePatterns`.
   images: {
     formats: ["image/avif", "image/webp"],
+
+    // Next 16 solo acepta los valores de calidad declarados aquí; cualquier
+    // otro devuelve 400 y el componente cae al valor por omisión sin avisar.
+    // Se agrega 85 porque en fotografía de comida la diferencia contra 75 sí se
+    // nota en las salsas y los brillos, que es justo lo que da hambre.
+    qualities: [75, 85],
   },
 
 };
