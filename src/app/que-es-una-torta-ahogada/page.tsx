@@ -59,11 +59,11 @@ export default function GuiaPage() {
       <article className="mx-auto max-w-3xl px-4 py-10 md:py-14">
         <Breadcrumbs trail={TRAIL} />
 
-        <h1 className="mt-5 text-4xl font-black leading-tight tracking-tight md:text-5xl">
+        <h1 className="mt-5 text-4xl md:text-5xl">
           ¿Qué es una torta ahogada?
         </h1>
 
-        <p className="mt-3 text-sm text-brand-ink/55">
+        <p className="mt-3 text-sm text-ink/55">
           Guía escrita por {business.name}, {business.address.neighborhood},{" "}
           {business.address.locality}, Jalisco ·{" "}
           <time dateTime={ACTUALIZADO}>Actualizado en enero de 2026</time>
@@ -72,7 +72,7 @@ export default function GuiaPage() {
         {/* Respuesta directa arriba de todo: es el fragmento que se cita. */}
         <p
           data-speakable
-          className="mt-6 rounded-2xl border-2 border-brand-gold bg-brand-gold-soft p-5 text-lg font-medium leading-relaxed"
+          className="mt-6 rounded-2xl border-2 border-gold bg-gold-soft p-5 text-lg font-medium leading-relaxed"
         >
           La torta ahogada es un platillo tradicional de Guadalajara y Zapopan, en
           Jalisco, que consiste en un birote salado partido a la mitad, relleno de
@@ -205,11 +205,11 @@ export default function GuiaPage() {
         </Seccion>
 
         {/* Cierre con conversión: la guía trae tráfico informativo y aquí se convierte. */}
-        <aside className="mt-12 rounded-3xl border-2 border-brand-red-dark bg-brand-gold-soft p-6 md:p-8">
-          <h2 className="text-2xl font-black tracking-tight">
+        <aside className="mt-12 rounded-3xl border-2 border-brand-red-dark bg-gold-soft p-6 md:p-8">
+          <h2 className="text-2xl ">
             Pruébala en {business.address.neighborhood}, {business.address.locality}
           </h2>
-          <p className="mt-2 text-base leading-relaxed text-brand-ink/75">
+          <p className="mt-2 text-base leading-relaxed text-ink/75">
             En {business.name} preparamos tortas ahogadas con birote salado, salsa de
             chile de árbol hecha en casa y carne de pierna, buche, cuero o lengua. La
             torta cuesta {tortaPrice} y también entregamos a domicilio en el norte de{" "}
@@ -226,7 +226,7 @@ export default function GuiaPage() {
             </OrderLink>
             <Link
               href="/menu"
-              className="inline-flex h-13 items-center justify-center rounded-xl border-2 border-brand-gold bg-white px-6 font-semibold text-brand-ink transition-colors hover:bg-brand-gold"
+              className="inline-flex h-13 items-center justify-center rounded-xl border-2 border-gold bg-white px-6 font-semibold text-ink transition-colors hover:bg-gold"
             >
               Ver el menú
             </Link>
@@ -261,8 +261,8 @@ export default function GuiaPage() {
 function Seccion({ titulo, children }: { titulo: string; children: React.ReactNode }) {
   return (
     <section className="mt-10">
-      <h2 className="text-2xl font-black tracking-tight md:text-3xl">{titulo}</h2>
-      <div className="mt-3 grid gap-4 text-base leading-relaxed text-brand-ink/80 [&_li]:ml-5 [&_li]:list-disc [&_ul]:grid [&_ul]:gap-2">
+      <h2 className="text-2xl md:text-3xl">{titulo}</h2>
+      <div className="mt-3 grid gap-4 text-base leading-relaxed text-ink/80 [&_li]:ml-5 [&_li]:list-disc [&_ul]:grid [&_ul]:gap-2">
         {children}
       </div>
     </section>

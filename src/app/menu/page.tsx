@@ -39,11 +39,11 @@ export default function MenuPage() {
       <div className="mx-auto max-w-6xl px-4 py-10 md:py-14">
         <Breadcrumbs trail={TRAIL} />
 
-        <h1 className="mt-5 text-4xl font-black tracking-tight md:text-5xl">
+        <h1 className="mt-5 text-4xl md:text-5xl">
           Menú de tortas ahogadas y precios
         </h1>
 
-        <p data-speakable className="mt-4 max-w-2xl text-lg leading-relaxed text-brand-ink/75">
+        <p data-speakable className="mt-4 max-w-2xl text-lg leading-relaxed text-ink/75">
           Este es el menú completo de {business.name}, en {business.address.neighborhood},{" "}
           {business.address.locality}. Los precios van de {formatPrice(minPrice)} a{" "}
           {formatPrice(maxPrice)} e incluyen tortas ahogadas, mini tortas, tacos dorados,
@@ -75,7 +75,7 @@ export default function MenuPage() {
           <MenuList sections={menu} headingLevel="h2" />
         </div>
 
-        <p className="mt-8 text-sm text-brand-ink/60">
+        <p className="mt-8 text-sm text-ink/60">
           Los precios pueden variar en Rappi y Uber Eats por las comisiones de cada
           plataforma. Para el precio de esta página, pide directo por WhatsApp o
           teléfono.

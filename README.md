@@ -48,11 +48,19 @@ grep -rn "TODO(negocio)" src/
 - **Precios de bebidas** (`src/data/menu.ts`). Refresco de 355 ml, agua fresca de
   500 ml y agua natural de 1 L están capturados los tres a $35. Puede ser
   correcto, pero conviene verificar que no sea un error de captura.
+- **Año de apertura** (`founded`). Está puesto en **1995**, tomado del "DESDE
+  1995" que aparece en el logo y en la portada del diseño de referencia. Se
+  publica como `foundingDate` en el JSON-LD; si el año no es exacto, se corrige
+  en `src/data/business.ts` y cambia en todo el sitio.
 - **Formas de pago** (`src/data/business.ts` → `paymentAccepted`). Se dejó vacío a
   propósito: publicar "aceptamos tarjeta" sin terminal genera fricción en el
   mostrador y reseñas negativas.
-- **Año de apertura** (`founded`). Se emite como `foundingDate` y es señal de
-  confianza. Se dejó vacío en lugar de inventarlo.
+- **Precios de los combos.** Se conservan los del código original, que cuadran
+  exactamente con el menú (verificado por test). El diseño de referencia traía
+  otros números —Maxi de 8 tortas + 15 tacos a $826→$645 y un "Combo Individual
+  próximamente"—; ese $826 además no cuadra: 8 × $75 + 15 × $15 = **$825**. Si
+  los correctos son esos, se capturan en `src/data/combos.ts` y el precio
+  regular se recalcula solo.
 - **Preguntas pendientes del FAQ** (`src/data/faq.ts`, al final del archivo):
   tiempo de entrega, pedido mínimo, costo de envío y estacionamiento. Tienen
   volumen de búsqueda alto y conviene publicarlas en cuanto se confirmen.
@@ -92,6 +100,29 @@ realmente mueve el tráfico, en orden de impacto:
    las plataformas, y qué botón mover.
 
 ---
+
+## Sistema visual
+
+La referencia no es una landing de software, es la **rotulación pintada de las
+fondas del occidente de México**. De ahí salen todas las decisiones:
+
+- **Tipografía.** *Alfa Slab One* para títulos —una losa pesada que evoca los
+  rótulos pintados a mano— y *Barlow* para el texto, una grotesca de señalética
+  que aguanta bien en tamaños chicos. Se auto-hospedan con `next/font`: cero
+  peticiones a Google en tiempo de ejecución y sin salto de layout.
+- **Color.** Rojo chile profundo (`#9B1209`) como campo dominante, dorado como
+  el acento que salta, crema como papel. Todos los pares de contraste están
+  medidos y documentados en `globals.css`; el rojo vivo de marca (`#E9241A`) se
+  reserva para acentos porque como fondo de botón da 4.4:1 y reprueba WCAG AA.
+- **Textura.** Grano de cartel impreso y trama de medio tono, ambos en SVG
+  embebido: dan sensación de tinta sobre papel sin pedir una sola imagen.
+- **Papel picado.** El remate dentado entre secciones es el detalle que vuelve
+  la página reconocible. Es un `<path>` de SVG, pesa unos bytes.
+- **Sombras duras desplazadas** en vez de difuminado digital, como capas de
+  serigrafía. Los botones se "hunden" al presionarlos.
+
+Las secciones son Server Components: el sitio manda muy poco JavaScript al
+cliente, lo que cuenta para Core Web Vitals.
 
 ## Qué se hizo para posicionar
 

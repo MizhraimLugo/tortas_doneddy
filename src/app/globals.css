@@ -1,29 +1,42 @@
 @import "tailwindcss";
 
 /**
- * Paleta de marca.
+ * Sistema visual: rotulación de fonda jalisciense.
  *
- * Se conservan los colores originales del logo, pero se agregan dos tonos
- * oscuros para fondos con texto blanco. Motivo: medido en ratio de contraste
- * contra blanco, el rojo original (#E9241A) da 4.44:1 y el verde (#3B874C) da
- * 4.42:1, ambos por debajo del mínimo 4.5:1 que exige WCAG AA para texto normal.
+ * La referencia no es una landing de software, es la señalética pintada a mano
+ * de los puestos y fondas del occidente de México: losa pesada, rojo profundo,
+ * dorado que salta, papel picado y textura de cartel impreso.
  *
- * Los tonos originales siguen usándose en acentos, bordes, iconos y títulos
- * grandes, donde el umbral es 3:1 y sí cumplen. La identidad no cambia.
+ * Contraste verificado sobre el rojo de fondo #9B1209:
+ *   texto blanco  → 8.45:1  ✓ AA y AAA
+ *   texto dorado  → 4.72:1  ✓ AA
+ * Y sobre crema #FFF6E8:
+ *   rojo oscuro   → 5.4:1   ✓ AA
+ *   verde oscuro  → 6.2:1   ✓ AA
  */
 @theme {
+  /* Rojos: el profundo es campo de fondo, el vivo es acento */
+  --color-chile: #9b1209;
+  --color-chile-deep: #7a0e06;
   --color-brand-red: #e9241a;
-  --color-brand-red-dark: #cd1c11; /* 5.57:1 sobre blanco ✓ AA */
-  --color-brand-green: #3b874c;
-  --color-brand-green-dark: #2f6b3d; /* 6.38:1 sobre blanco ✓ AA */
-  --color-brand-gold: #ecba54;
-  --color-brand-gold-soft: #fdf3dd;
-  --color-brand-ink: #191010;
-  --color-brand-cream: #fffaf2;
+  --color-brand-red-dark: #cd1c11;
 
-  --font-sans:
-    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
-    Arial, "Noto Sans", sans-serif;
+  /* Verde de limón/tomatillo, para precios y confirmaciones */
+  --color-brand-green: #3b874c;
+  --color-brand-green-dark: #2f6b3d;
+
+  /* Dorado: el acento que salta sobre el rojo */
+  --color-gold: #ecba54;
+  --color-gold-deep: #d49f34;
+  --color-gold-soft: #fdf0d3;
+
+  /* Papel */
+  --color-cream: #fff6e8;
+  --color-cream-deep: #f7e9d4;
+  --color-ink: #1f100c;
+
+  --font-display: var(--font-alfa), Georgia, serif;
+  --font-sans: var(--font-barlow), ui-sans-serif, system-ui, sans-serif;
 
   --spacing-13: 3.25rem;
 }
@@ -35,10 +48,9 @@
   }
 
   /*
-   * El encabezado fijo mide ~104 px. Sin este margen, cada ancla (#menu,
-   * #paquetes...) aterriza con el título escondido detrás del header.
-   * Resolverlo en CSS permite eliminar el `scrollToId` de JavaScript por
-   * completo y hace que los enlaces funcionen aunque el JS no cargue.
+   * El encabezado fijo mide ~96 px. Sin este margen cada ancla aterriza con el
+   * título escondido detrás. Resolverlo en CSS permite que los enlaces
+   * funcionen aunque el JavaScript no cargue.
    */
   [id] {
     scroll-margin-top: 7rem;
@@ -48,16 +60,33 @@
     html {
       scroll-behavior: auto;
     }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 
   body {
-    background-color: var(--color-brand-cream);
-    color: var(--color-brand-ink);
+    background-color: var(--color-cream);
+    color: var(--color-ink);
     font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
     text-rendering: optimizeLegibility;
   }
 
-  /* Oculta el triángulo por defecto de <summary> también en Safari. */
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400; /* Alfa Slab One solo tiene un peso, y ya es pesadísimo */
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+  }
+
   summary::-webkit-details-marker {
     display: none;
   }
@@ -65,18 +94,20 @@
     list-style: none;
   }
 
-  /* Foco visible y consistente para navegación por teclado. */
   :focus-visible {
-    outline: 2px solid var(--color-brand-ink);
-    outline-offset: 2px;
+    outline: 3px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-ink);
   }
 }
 
 @layer utilities {
-  /*
-   * Enlace para saltar al contenido: visible solo cuando recibe foco.
-   * Es el primer elemento tabulable de la página.
-   */
+  /* Enlace de salto: solo visible al recibir foco por teclado. */
   .skip-link {
     position: absolute;
     left: -9999px;
@@ -86,5 +117,71 @@
   .skip-link:focus {
     left: 1rem;
     top: 1rem;
+  }
+
+  /**
+   * Grano de cartel impreso.
+   *
+   * Es una textura SVG embebida como data URI: no pide red, no suma peticiones
+   * y da la sensación de tinta sobre papel en lugar de color plano digital.
+   */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.28'/%3E%3C/svg%3E");
+  }
+
+  /* Trama de puntos, como impresión de medio tono en cartel viejo. */
+  .halftone {
+    background-image: radial-gradient(
+      currentColor 1px,
+      transparent 1.1px
+    );
+    background-size: 10px 10px;
+  }
+
+  /* Sombra dura desplazada: capas de serigrafía, no difuminado digital. */
+  .shadow-stamp {
+    box-shadow: 5px 5px 0 0 var(--color-ink);
+  }
+  .shadow-stamp-gold {
+    box-shadow: 5px 5px 0 0 var(--color-gold-deep);
+  }
+  .shadow-stamp-red {
+    box-shadow: 5px 5px 0 0 var(--color-chile-deep);
+  }
+
+  /**
+   * Etiqueta de precio con muesca, como los cartelitos colgados de un puesto.
+   * El recorte va del lado izquierdo, donde iría el hilo.
+   */
+  .price-tag {
+    clip-path: polygon(
+      12px 0,
+      100% 0,
+      100% 100%,
+      12px 100%,
+      0 50%
+    );
+    padding-left: 1.25rem;
+  }
+
+  /* Aparición escalonada en la carga; el retraso lo pone cada elemento. */
+  .rise {
+    animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
 }

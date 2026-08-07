@@ -18,7 +18,7 @@ type BreadcrumbsProps = {
 export function Breadcrumbs({ trail }: BreadcrumbsProps) {
   return (
     <nav aria-label="Ruta de navegación">
-      <ol className="flex flex-wrap items-center gap-1.5 text-sm text-brand-ink/60">
+      <ol className="flex flex-wrap items-center gap-1.5 text-sm text-ink/60">
         {trail.map((crumb, index) => {
           const isLast = index === trail.length - 1;
 
@@ -30,7 +30,7 @@ export function Breadcrumbs({ trail }: BreadcrumbsProps) {
 
               {isLast ? (
                 // El elemento actual no se enlaza a sí mismo.
-                <span aria-current="page" className="font-semibold text-brand-ink/80">
+                <span aria-current="page" className="font-semibold text-ink/80">
                   {crumb.name}
                 </span>
               ) : (

@@ -56,18 +56,18 @@ export function BrandLogo({ size = 64, className, priority = false }: BrandLogoP
     <span
       className={cn(
         "inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full",
-        "border-2 border-brand-gold bg-white",
+        "border-2 border-ink bg-gold",
         className
       )}
       style={{ width: size, height: size }}
     >
       {exhausted ? (
-        // Respaldo deliberado: monograma con los colores de la marca. Se ve
-        // intencional, no como una imagen rota.
+        // Respaldo deliberado: monograma en la tipografía de marca. Se lee como
+        // una decisión de diseño, no como una imagen rota.
         <span
           aria-hidden="true"
-          className="font-black tracking-tighter text-brand-red-dark"
-          style={{ fontSize: size * 0.4 }}
+          className="font-display leading-none text-chile"
+          style={{ fontSize: size * 0.38 }}
         >
           DE
         </span>

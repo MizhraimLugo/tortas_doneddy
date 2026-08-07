@@ -72,11 +72,11 @@ export default function DomicilioPage() {
       <div className="mx-auto max-w-4xl px-4 py-10 md:py-14">
         <Breadcrumbs trail={TRAIL} />
 
-        <h1 className="mt-5 text-4xl font-black tracking-tight md:text-5xl">
+        <h1 className="mt-5 text-4xl md:text-5xl">
           Tortas ahogadas a domicilio en Zapopan
         </h1>
 
-        <p data-speakable className="mt-4 text-lg leading-relaxed text-brand-ink/75">
+        <p data-speakable className="mt-4 text-lg leading-relaxed text-ink/75">
           {business.name} entrega tortas ahogadas a domicilio en {serviceAreasText}.
           Pides por WhatsApp al {business.phone.displayIntl}, por teléfono al mismo
           número, o desde Rappi y Uber Eats. Servimos de {business.hours.range},{" "}
@@ -107,10 +107,10 @@ export default function DomicilioPage() {
 
         {/* Cobertura: cada colonia como texto plano captura su búsqueda propia. */}
         <section className="mt-12">
-          <h2 className="text-2xl font-black tracking-tight md:text-3xl">
+          <h2 className="text-2xl md:text-3xl">
             Colonias donde entregamos
           </h2>
-          <p className="mt-3 text-base leading-relaxed text-brand-ink/75">
+          <p className="mt-3 text-base leading-relaxed text-ink/75">
             Salimos desde nuestro local en {fullAddress}, así que la entrega es más
             rápida en las colonias cercanas del norte de {business.address.locality}:
           </p>
@@ -119,17 +119,17 @@ export default function DomicilioPage() {
             {business.serviceAreas.map((area) => (
               <li
                 key={area}
-                className="rounded-2xl border-2 border-brand-gold bg-brand-gold-soft px-4 py-3"
+                className="rounded-2xl border-2 border-gold bg-gold-soft px-4 py-3"
               >
                 <h3 className="font-bold">Tortas ahogadas en {area}</h3>
-                <p className="mt-0.5 text-sm text-brand-ink/70">
+                <p className="mt-0.5 text-sm text-ink/70">
                   Entrega a domicilio disponible en horario de servicio.
                 </p>
               </li>
             ))}
           </ul>
 
-          <p className="mt-4 text-base text-brand-ink/75">
+          <p className="mt-4 text-base text-ink/75">
             ¿Tu colonia no aparece? Escríbenos por WhatsApp y te confirmamos si
             llegamos hasta allá.{" "}
             <OrderLink
@@ -147,7 +147,7 @@ export default function DomicilioPage() {
 
         {/* Proceso: contenido único que justifica esta página frente a la portada. */}
         <section className="mt-12">
-          <h2 className="text-2xl font-black tracking-tight md:text-3xl">
+          <h2 className="text-2xl md:text-3xl">
             Cómo pedir, paso a paso
           </h2>
 
@@ -162,7 +162,7 @@ export default function DomicilioPage() {
                 </span>
                 <div>
                   <h3 className="font-bold">{paso.titulo}</h3>
-                  <p className="mt-1 text-base leading-relaxed text-brand-ink/75">
+                  <p className="mt-1 text-base leading-relaxed text-ink/75">
                     {paso.detalle}
                   </p>
                 </div>
@@ -172,10 +172,10 @@ export default function DomicilioPage() {
         </section>
 
         <section className="mt-12">
-          <h2 className="text-2xl font-black tracking-tight md:text-3xl">
+          <h2 className="text-2xl md:text-3xl">
             Pedir directo o por aplicación
           </h2>
-          <p className="mt-3 text-base leading-relaxed text-brand-ink/75">
+          <p className="mt-3 text-base leading-relaxed text-ink/75">
             Puedes pedirnos por los dos caminos, pero no cuestan lo mismo. Las
             aplicaciones cobran una comisión que se refleja en el precio final, así
             que los precios y las promociones de esta página aplican en pedidos
@@ -183,12 +183,12 @@ export default function DomicilioPage() {
           </p>
 
           <div className="mt-5 grid gap-4 sm:grid-cols-2">
-            <div className="rounded-2xl border-2 border-brand-green-dark bg-brand-gold-soft p-5">
-              <h3 className="flex items-center gap-2 font-black">
+            <div className="rounded-2xl border-2 border-brand-green-dark bg-gold-soft p-5">
+              <h3 className="flex items-center gap-2 ">
                 <MessageCircle className="h-5 w-5 text-brand-green-dark" aria-hidden="true" />
                 Directo por WhatsApp o teléfono
               </h3>
-              <ul className="mt-3 grid gap-1.5 text-sm text-brand-ink/75">
+              <ul className="mt-3 grid gap-1.5 text-sm text-ink/75">
                 <li>Precios y promociones de esta página</li>
                 <li>Puedes pedir ajustes: menos salsa, sin picante, más carne</li>
                 <li>Nos hablas directo, sin intermediario</li>
@@ -203,12 +203,12 @@ export default function DomicilioPage() {
               </OrderLink>
             </div>
 
-            <div className="rounded-2xl border-2 border-brand-gold bg-white p-5">
-              <h3 className="flex items-center gap-2 font-black">
+            <div className="rounded-2xl border-2 border-gold bg-white p-5">
+              <h3 className="flex items-center gap-2 ">
                 <ShoppingBag className="h-5 w-5 text-brand-red-dark" aria-hidden="true" />
                 Rappi y Uber Eats
               </h3>
-              <ul className="mt-3 grid gap-1.5 text-sm text-brand-ink/75">
+              <ul className="mt-3 grid gap-1.5 text-sm text-ink/75">
                 <li>Pagas con tarjeta dentro de la app</li>
                 <li>Puedes seguir al repartidor en el mapa</li>
                 <li>Los precios pueden ser más altos por la comisión</li>
@@ -236,11 +236,11 @@ export default function DomicilioPage() {
         </section>
 
         {comboFamiliar && (
-          <section className="mt-12 rounded-3xl border-2 border-brand-gold bg-brand-gold-soft p-6 md:p-8">
-            <h2 className="text-2xl font-black tracking-tight">
+          <section className="mt-12 rounded-3xl border-2 border-gold bg-gold-soft p-6 md:p-8">
+            <h2 className="text-2xl ">
               ¿Piden varios? Sale más barato en combo
             </h2>
-            <p className="mt-2 text-base leading-relaxed text-brand-ink/75">
+            <p className="mt-2 text-base leading-relaxed text-ink/75">
               El {comboFamiliar.name} trae {comboFamiliar.includes.join(" y ")} por{" "}
               {formatPrice(comboFamiliar.promo)} en vez de{" "}
               {formatPrice(comboFamiliar.regular)}: te ahorras{" "}

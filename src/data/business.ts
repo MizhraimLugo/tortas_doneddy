@@ -34,12 +34,16 @@ export const business = {
     "Tortas ahogadas de pierna, buche, cuero y lengua con birote salado y salsa de chile de árbol, en La Cima, Zapopan. Comemos aquí o te lo llevamos a domicilio.",
 
   /**
-   * TODO(negocio): año de apertura. Se emite como `foundingDate` en el JSON-LD y
-   * es una señal de confianza (E-E-A-T) fuerte para un negocio local: "desde
-   * 2015" pesa más que un sitio sin historia. Se deja vacío porque no está
-   * confirmado, y un dato inventado aquí sería una afirmación falsa publicada.
+   * Año de apertura. Se emite como `foundingDate` en el JSON-LD y es una señal
+   * de confianza (E-E-A-T) fuerte para un negocio local: "desde 1995" pesa más
+   * que un sitio sin historia, y los motores de IA lo citan al describir el
+   * negocio.
+   *
+   * TODO(negocio): confirmar. Se toma de "DESDE 1995", que aparece dentro del
+   * logo y en la portada del diseño de referencia. Si el año no es correcto,
+   * cámbialo aquí y se actualiza en todo el sitio.
    */
-  founded: "" as string,
+  founded: "1995" as string,
 
   // ── Dirección (NAP) ────────────────────────────────────────────────────────
   address: {

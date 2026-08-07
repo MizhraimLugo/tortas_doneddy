@@ -18,17 +18,18 @@ export const navLinks: NavLink[] = [
   { label: "Menú", href: "/menu", title: "Menú completo con precios" },
   { label: "Paquetes", href: "/#paquetes", title: "Combos y promociones" },
   {
-    label: "A domicilio",
+    label: "Domicilio",
     href: "/tortas-ahogadas-a-domicilio-zapopan",
     title: "Entrega a domicilio en Zapopan",
   },
   { label: "Ubicación", href: "/#ubicacion", title: "Cómo llegar al local" },
+  { label: "Instagram", href: "/#instagram", title: "Nuestras fotos y novedades" },
   {
     label: "Guía",
     href: "/que-es-una-torta-ahogada",
     title: "Qué es una torta ahogada",
   },
-  { label: "Preguntas", href: "/#faq", title: "Preguntas frecuentes" },
+  { label: "FAQ", href: "/#faq", title: "Preguntas frecuentes" },
 ];
 
 /**

@@ -29,7 +29,7 @@ export default function OpenGraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          backgroundColor: "#fffaf2",
+          backgroundColor: "#9b1209",
           padding: 72,
           fontFamily: "sans-serif",
         }}
@@ -40,49 +40,43 @@ export default function OpenGraphImage() {
               width: 84,
               height: 84,
               borderRadius: 999,
-              backgroundColor: "#cd1c11",
-              color: "white",
+              backgroundColor: "#ecba54",
+              color: "#9b1209",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: 40,
-              fontWeight: 900,
+              fontSize: 38,
+              fontWeight: 700,
             }}
           >
             DE
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <span style={{ fontSize: 26, color: "#191010", opacity: 0.7 }}>
-              Tortas Ahogadas
+            <span
+              style={{
+                fontSize: 22,
+                color: "#ecba54",
+                letterSpacing: 4,
+                fontWeight: 700,
+              }}
+            >
+              TORTAS AHOGADAS
             </span>
-            <span style={{ fontSize: 42, fontWeight: 900, color: "#191010" }}>
+            <span style={{ fontSize: 44, fontWeight: 700, color: "#fff6e8" }}>
               Don Eddy
+              {business.founded ? ` · desde ${business.founded}` : ""}
             </span>
           </div>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <span
-            style={{
-              fontSize: 68,
-              fontWeight: 900,
-              color: "#191010",
-              lineHeight: 1.05,
-            }}
-          >
+          <span style={{ fontSize: 70, fontWeight: 700, color: "#fff6e8", lineHeight: 1.05 }}>
             Tortas ahogadas en
           </span>
-          <span
-            style={{
-              fontSize: 68,
-              fontWeight: 900,
-              color: "#cd1c11",
-              lineHeight: 1.05,
-            }}
-          >
+          <span style={{ fontSize: 70, fontWeight: 700, color: "#ecba54", lineHeight: 1.05 }}>
             {business.address.locality}, {business.address.regionShort}
           </span>
-          <span style={{ fontSize: 30, color: "#191010", opacity: 0.75, marginTop: 22 }}>
+          <span style={{ fontSize: 29, color: "#fff6e8", opacity: 0.85, marginTop: 22 }}>
             Birote salado · Pierna, buche, cuero y lengua · A domicilio
           </span>
         </div>
@@ -98,11 +92,10 @@ export default function OpenGraphImage() {
               style={{
                 fontSize: 25,
                 fontWeight: 700,
-                color: "#191010",
+                color: "#1f100c",
                 backgroundColor: "#ecba54",
-                border: "3px solid #cd1c11",
                 borderRadius: 999,
-                padding: "10px 24px",
+                padding: "10px 26px",
               }}
             >
               {chip}

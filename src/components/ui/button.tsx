@@ -3,36 +3,58 @@ import { cn } from "@/lib/utils";
 /**
  * Botones y enlaces con apariencia de botón.
  *
- * Contraste: los fondos usan `--brand-red-dark` (#CD1C11) y `--brand-green-dark`
- * (#2F6B3D) en vez de los tonos originales. Medido contra texto blanco, el rojo
- * original (#E9241A) daba 4.44:1 y el verde (#3B874C) 4.42:1 — ambos por debajo
- * del mínimo AA de 4.5:1. Los tonos oscuros superan 5.5:1 sin alterar la
- * identidad de marca, que se conserva en acentos, bordes y textos grandes.
+ * La sombra dura desplazada (`shadow-stamp`) imita capas de serigrafía y se
+ * "hunde" al presionar. Es un detalle táctil que hace que el sitio se sienta
+ * hecho a mano y no salido de una plantilla.
+ *
+ * Contraste medido de cada variante:
+ *   primary (chile #9B1209 + crema)     → 7.9:1  ✓ AA y AAA
+ *   gold    (#ECBA54 + tinta #1F100C)   → 9.5:1  ✓ AA y AAA
+ *   green   (#2F6B3D + blanco)          → 6.4:1  ✓ AA
+ * El rojo vivo de marca (#E9241A) queda en 4.4:1, por debajo del mínimo, así
+ * que se reserva para acentos y texto grande, nunca como fondo de botón.
  */
 
-export type ButtonVariant = "primary" | "secondary" | "outline" | "ghost";
+export type ButtonVariant =
+  | "primary"
+  | "gold"
+  | "green"
+  | "outline"
+  | "onDark"
+  | "onDarkOutline"
+  | "ghost";
 export type ButtonSize = "sm" | "md" | "lg";
 
-const BASE =
-  "inline-flex items-center justify-center gap-2 rounded-xl font-semibold " +
-  "transition-colors duration-150 " +
-  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-ink " +
-  "disabled:pointer-events-none disabled:opacity-50";
+const BASE = [
+  "group/btn inline-flex items-center justify-center gap-2",
+  "rounded-full border-2 font-extrabold uppercase tracking-wide",
+  "transition-[transform,box-shadow,background-color,color] duration-150",
+  "active:translate-x-[3px] active:translate-y-[3px] active:shadow-none",
+  "disabled:pointer-events-none disabled:opacity-50",
+].join(" ");
 
 const VARIANTS: Record<ButtonVariant, string> = {
   primary:
-    "bg-brand-red-dark text-white hover:bg-brand-green-dark active:bg-brand-green-dark",
-  secondary:
-    "bg-brand-green-dark text-white hover:bg-brand-red-dark active:bg-brand-red-dark",
+    "border-ink bg-chile text-cream shadow-stamp hover:bg-chile-deep hover:-translate-y-0.5",
+  gold: "border-ink bg-gold text-ink shadow-stamp hover:bg-gold-deep hover:-translate-y-0.5",
+  green:
+    "border-ink bg-brand-green-dark text-white shadow-stamp hover:bg-brand-green hover:-translate-y-0.5",
   outline:
-    "border-2 border-brand-gold bg-white text-brand-ink hover:bg-brand-gold hover:text-brand-ink",
-  ghost: "text-brand-ink hover:bg-brand-gold/30",
+    "border-ink bg-transparent text-ink hover:bg-ink hover:text-cream",
+  // Para usar encima del campo rojo: se invierte el contraste.
+  onDark:
+    "border-cream bg-cream text-chile shadow-stamp-gold hover:bg-gold hover:text-ink hover:-translate-y-0.5",
+  // Variante secundaria sobre rojo, sin sombra: para acciones de apoyo que no
+  // deben competir con el llamado principal.
+  onDarkOutline:
+    "border-cream/45 bg-transparent text-cream hover:border-gold hover:bg-gold hover:text-ink",
+  ghost: "border-transparent bg-transparent text-ink hover:bg-gold/40",
 };
 
 const SIZES: Record<ButtonSize, string> = {
-  sm: "h-9 px-3 text-sm",
-  md: "h-11 px-5 text-sm",
-  lg: "h-13 px-6 text-base",
+  sm: "h-9 px-4 text-[0.7rem]",
+  md: "h-11 px-5 text-xs",
+  lg: "h-13 px-7 text-sm",
 };
 
 export function buttonClasses(
@@ -56,10 +78,6 @@ export function Button({
   ...props
 }: ButtonProps) {
   return (
-    <button
-      type={type}
-      className={buttonClasses(variant, size, className)}
-      {...props}
-    />
+    <button type={type} className={buttonClasses(variant, size, className)} {...props} />
   );
 }

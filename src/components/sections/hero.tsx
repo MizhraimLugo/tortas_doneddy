@@ -1,136 +1,156 @@
-import { Clock, MapPin, Star, Truck } from "lucide-react";
+import { Clock, MapPin, Sandwich, Truck } from "lucide-react";
 import Link from "next/link";
 
+import { FoodImage } from "@/components/food-image";
 import { OrderLink } from "@/components/order-link";
+import { PapelPicado } from "@/components/ornaments";
 import { business, fullAddress, serviceAreasText, waMessages } from "@/data/business";
 import { findMenuItem, formatPrice } from "@/data/menu";
 
 /**
  * Portada.
  *
- * El cambio de fondo respecto a la versión anterior es el H1. Antes decía
- * "TU PONES EL HAMBRE / NOSOTROS PONEMOS LAS TORTAS": un eslogan sin una sola
- * palabra clave. El H1 es la señal on-page más fuerte que tiene una página, y
- * estaba gastado en algo que nadie busca.
- *
- * Ahora el H1 contiene el producto ("tortas ahogadas"), la ciudad ("Zapopan") y
- * el diferenciador ("birote salado"). El eslogan se conserva como antetítulo,
- * que es donde funciona: refuerza marca sin costar posicionamiento.
+ * El eslogan manda visualmente, como en el diseño de referencia, pero el `h1`
+ * abre con "Tortas ahogadas en Zapopan". El `h1` es la señal on-page más fuerte
+ * de una página y en la versión original estaba gastado íntegramente en una
+ * frase que nadie busca; así se conservan las dos cosas: la marca para quien
+ * llega, y la palabra clave para quien todavía no.
  */
 export function Hero() {
   const tortaPrice = formatPrice(findMenuItem("torta-ahogada").price);
 
   return (
-    <section className="border-b border-brand-gold/40 bg-white">
-      <div className="mx-auto max-w-6xl px-4 py-10 md:py-16">
-        <div className="grid items-center gap-10 md:grid-cols-2">
-          <div>
-            <p className="text-sm font-black uppercase tracking-widest text-brand-red-dark">
-              {/* Acento corregido: en español la tilde se mantiene en mayúsculas. */}
-              Tú pones el hambre, nosotros las tortas
-            </p>
+    <section className="relative isolate bg-chile text-cream">
+      <span aria-hidden="true" className="grain absolute inset-0" />
 
-            <h1 className="mt-3 text-4xl font-black leading-[1.05] tracking-tight md:text-5xl lg:text-6xl">
-              Tortas ahogadas en Zapopan,
-              <span className="block text-brand-red-dark">hechas con birote salado</span>
-            </h1>
-
+      <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 pb-16 pt-12 md:pb-20 md:pt-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
+        <div>
+          <h1 className="text-[clamp(2.3rem,4.6vw,3.6rem)]">
             {/*
-              `data-speakable` marca el párrafo que los asistentes de voz leen en
-              voz alta cuando alguien pregunta por el negocio. Contiene los cinco
-              datos que resuelven la consulta: qué, dónde, cuánto, cuándo y cómo.
+              Orden de lectura: primero la palabra clave, luego el eslogan.
+              Visualmente domina el eslogan; para un buscador, el h1 empieza
+              con "Tortas ahogadas en Zapopan".
             */}
-            <p
-              data-speakable
-              className="mt-5 max-w-prose text-lg leading-relaxed text-brand-ink/75"
+            <span className="mb-4 block font-sans text-[0.3em] font-extrabold uppercase leading-tight tracking-[0.2em] text-gold">
+              Tortas ahogadas en Zapopan · desde {business.founded}
+            </span>
+            <span className="block text-balance">Tú pones el hambre,</span>
+            <span className="block text-balance text-gold">
+              nosotros ponemos las tortas
+            </span>
+          </h1>
+
+          <p
+            data-speakable
+            className="mt-6 max-w-xl text-lg leading-relaxed text-cream/90"
+          >
+            Tortas ahogadas de pierna, buche, cuero y lengua con birote salado y
+            salsa de chile de árbol, desde {tortaPrice}, en{" "}
+            {business.address.neighborhood}, {business.address.locality}. Abrimos de{" "}
+            {business.hours.range} y llevamos a domicilio.
+          </p>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <OrderLink
+              href={business.whatsapp(waMessages.general)}
+              channel="whatsapp"
+              location="hero"
+              variant="onDark"
+              size="lg"
             >
-              En {business.name} preparamos tortas ahogadas de pierna, buche, cuero y
-              lengua desde {tortaPrice}, en {business.address.neighborhood},{" "}
-              {business.address.locality}. Abrimos de {business.hours.range} y
-              entregamos a domicilio en {serviceAreasText}.
-            </p>
+              Pedir ahora
+            </OrderLink>
 
-            <div className="mt-7 flex flex-wrap gap-3">
-              <OrderLink
-                href={business.whatsapp(waMessages.general)}
-                channel="whatsapp"
-                location="hero"
-                size="lg"
-              >
-                Pedir por WhatsApp
-              </OrderLink>
-
-              <Link
-                href="/menu"
-                className="inline-flex h-13 items-center justify-center rounded-xl border-2 border-brand-gold bg-white px-6 text-base font-semibold text-brand-ink transition-colors hover:bg-brand-gold"
-              >
-                Ver menú y precios
-              </Link>
-            </div>
-
-            <p className="mt-4 text-sm text-brand-ink/60">
-              ¿Prefieres llamar?{" "}
-              <a
-                href={business.phone.telHref}
-                className="font-semibold text-brand-red-dark underline underline-offset-2"
-              >
-                {business.phone.displayIntl}
-              </a>
-            </p>
+            <Link
+              href="/menu"
+              className="inline-flex h-13 items-center justify-center rounded-full border-2 border-cream/70 px-7 text-sm font-extrabold uppercase tracking-wide text-cream transition-colors hover:bg-cream hover:text-chile"
+            >
+              Ver el menú
+            </Link>
           </div>
 
-          {/* Datos clave: texto plano, extraíble por modelos y buscadores. */}
-          <ul className="grid gap-3 sm:grid-cols-2">
-            <HeroFact
-              icon={<Clock className="h-5 w-5" aria-hidden="true" />}
-              title="Horario"
-              lines={[business.hours.range, business.hours.closedNote]}
+          <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
+            <span className="font-semibold text-cream/70">También en</span>
+            <OrderLink
+              href={business.links.rappi}
+              channel="rappi"
+              location="hero"
+              variant="onDarkOutline"
+              size="sm"
+            >
+              Rappi
+            </OrderLink>
+            <OrderLink
+              href={business.links.uberEats}
+              channel="uber_eats"
+              location="hero"
+              variant="onDarkOutline"
+              size="sm"
+            >
+              Uber Eats
+            </OrderLink>
+            <span className="text-cream/55">Promos pueden variar por plataforma</span>
+          </div>
+        </div>
+
+        {/* Foto principal, ligeramente girada como una foto clavada al muro. */}
+        <div className="relative mx-auto w-full max-w-sm lg:max-w-md">
+          <div className="rotate-[1.5deg] rounded-[2rem] border-4 border-gold bg-gold p-2 shadow-[10px_10px_0_0_var(--color-chile-deep)]">
+            <FoodImage
+              src="/brand/torta-ahogada-don-eddy.jpg"
+              alt={`Torta ahogada de ${business.name} con birote salado, bañada en salsa de jitomate y chile de árbol`}
+              aspect="4 / 3"
+              priority
+              className="rounded-[1.5rem]"
+              fallbackIcon={<Sandwich className="h-20 w-20" aria-hidden="true" />}
             />
-            <HeroFact
-              icon={<MapPin className="h-5 w-5" aria-hidden="true" />}
-              title="Dónde estamos"
-              lines={[fullAddress]}
-            />
-            <HeroFact
-              icon={<Truck className="h-5 w-5" aria-hidden="true" />}
-              title="Entrega a domicilio"
-              lines={[serviceAreasText]}
-            />
-            <HeroFact
-              icon={<Star className="h-5 w-5" aria-hidden="true" />}
-              title="Desde"
-              lines={[
-                `${tortaPrice} la torta ahogada`,
-                `Combos desde ${formatPrice(165)} para 2 personas`,
-              ]}
-            />
-          </ul>
+          </div>
+
+          <p className="mt-6 text-center font-display text-lg text-gold">
+            Tradición, sabor y calidad
+            {business.founded ? ` desde ${business.founded}` : ""}
+          </p>
         </div>
       </div>
+
+      {/* Franja de datos clave: texto plano, fácil de extraer por un modelo. */}
+      <div className="relative border-t border-cream/15">
+        <ul className="mx-auto grid max-w-6xl gap-px px-4 py-6 sm:grid-cols-3">
+          <HeroFact icon={<Clock className="h-5 w-5" aria-hidden="true" />} label="Horario">
+            {business.hours.range} · {business.hours.closedNote}
+          </HeroFact>
+          <HeroFact icon={<MapPin className="h-5 w-5" aria-hidden="true" />} label="Dónde estamos">
+            {fullAddress}
+          </HeroFact>
+          <HeroFact icon={<Truck className="h-5 w-5" aria-hidden="true" />} label="A domicilio">
+            {serviceAreasText}
+          </HeroFact>
+        </ul>
+      </div>
+
+      <PapelPicado />
     </section>
   );
 }
 
 function HeroFact({
   icon,
-  title,
-  lines,
+  label,
+  children,
 }: {
   icon: React.ReactNode;
-  title: string;
-  lines: string[];
+  label: string;
+  children: React.ReactNode;
 }) {
   return (
-    <li className="rounded-2xl border-2 border-brand-gold bg-brand-gold-soft p-4">
-      <span className="flex items-center gap-2 text-brand-red-dark">
-        {icon}
-        <span className="text-sm font-black uppercase tracking-wide">{title}</span>
-      </span>
-      {lines.map((line) => (
-        <span key={line} className="mt-1.5 block text-sm text-brand-ink/80">
-          {line}
+    <li className="flex items-start gap-3 px-2 py-2">
+      <span className="mt-0.5 shrink-0 text-gold">{icon}</span>
+      <span>
+        <span className="block text-xs font-extrabold uppercase tracking-[0.16em] text-gold">
+          {label}
         </span>
-      ))}
+        <span className="mt-1 block text-sm leading-snug text-cream/85">{children}</span>
+      </span>
     </li>
   );
 }

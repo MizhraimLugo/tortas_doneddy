@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Alfa_Slab_One, Barlow } from "next/font/google";
 
 import { JsonLd } from "@/components/json-ld";
 import { SiteFooter } from "@/components/site-footer";
@@ -8,6 +9,31 @@ import { SITE_URL, business } from "@/data/business";
 import { graph, restaurantNode, websiteNode } from "@/lib/schema";
 
 import "./globals.css";
+
+/**
+ * Tipografías.
+ *
+ * Alfa Slab One es una losa pesada que evoca directamente la rotulación
+ * pintada de fondas y cantinas mexicanas; Barlow es una grotesca ligeramente
+ * condensada con aire de señalética, que aguanta bien en tamaños chicos.
+ *
+ * `next/font` las descarga en el build y las auto-hospeda: no hay petición a
+ * Google en tiempo de ejecución (mejor privacidad y mejor LCP) y `display:
+ * swap` con métricas de respaldo evita el salto de layout que castiga CLS.
+ */
+const alfa = Alfa_Slab_One({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-alfa",
+});
+
+const barlow = Barlow({
+  weight: ["400", "500", "600", "700", "800"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-barlow",
+});
 
 export const metadata: Metadata = {
   // Base para resolver todas las URLs relativas (canónicas, Open Graph, sitemap).
@@ -61,7 +87,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#cd1c11",
+  themeColor: "#9b1209",
   width: "device-width",
   initialScale: 1,
 };
@@ -73,9 +99,9 @@ export default function RootLayout({
     // `es-MX` y no solo `es`: le indica a buscadores y modelos que el contenido
     // es de México, lo cual importa para consultas locales y para el vocabulario
     // ("birote", "buche") que no se usa igual en otros países hispanohablantes.
-    <html lang="es-MX">
+    <html lang="es-MX" className={`${alfa.variable} ${barlow.variable}`}>
       <body className="min-h-screen antialiased">
-        <a href="#contenido" className="skip-link rounded-lg bg-brand-ink px-4 py-2 text-white">
+        <a href="#contenido" className="skip-link rounded-lg bg-ink px-4 py-2 font-semibold text-white">
           Saltar al contenido
         </a>
 

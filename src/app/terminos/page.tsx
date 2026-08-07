@@ -26,22 +26,22 @@ export default function TerminosPage() {
         ]}
       />
 
-      <h1 className="mt-5 text-3xl font-black tracking-tight md:text-4xl">
+      <h1 className="mt-5 text-3xl md:text-4xl">
         Términos y condiciones
       </h1>
 
-      <div className="mt-6 rounded-2xl border-2 border-brand-red-dark bg-brand-gold-soft p-5 text-sm">
+      <div className="mt-6 rounded-2xl border-2 border-brand-red-dark bg-gold-soft p-5 text-sm">
         <p className="font-bold text-brand-red-dark">Pendiente de revisión legal</p>
-        <p className="mt-1 text-brand-ink/80">
+        <p className="mt-1 text-ink/80">
           Plantilla base. Completa los apartados marcados como{" "}
           <strong>PENDIENTE</strong> y valídala con un abogado antes de publicar.
           Elimina este recuadro cuando esté listo.
         </p>
       </div>
 
-      <div className="mt-8 grid gap-6 text-base leading-relaxed text-brand-ink/80">
+      <div className="mt-8 grid gap-6 text-base leading-relaxed text-ink/80">
         <section>
-          <h2 className="text-xl font-black text-brand-ink">Pedidos</h2>
+          <h2 className="text-xl text-ink">Pedidos</h2>
           <p className="mt-2">
             Los pedidos se toman por WhatsApp, por teléfono, en el local o a través de
             las plataformas de reparto. Un pedido se considera confirmado cuando te
@@ -50,7 +50,7 @@ export default function TerminosPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-black text-brand-ink">Precios</h2>
+          <h2 className="text-xl text-ink">Precios</h2>
           <p className="mt-2">
             Los precios publicados en este sitio están en pesos mexicanos e incluyen
             impuestos. Aplican a pedidos directos por WhatsApp, teléfono o en el local.
@@ -64,7 +64,7 @@ export default function TerminosPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-black text-brand-ink">Entregas</h2>
+          <h2 className="text-xl text-ink">Entregas</h2>
           <p className="mt-2">
             Entregamos a domicilio en {serviceAreasText}, dentro de nuestro horario de
             servicio de {business.hours.range}. Los tiempos de entrega son estimados y
@@ -77,7 +77,7 @@ export default function TerminosPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-black text-brand-ink">Promociones</h2>
+          <h2 className="text-xl text-ink">Promociones</h2>
           <p className="mt-2">
             Los paquetes y promociones publicados aplican mientras estén vigentes en
             esta página y no son acumulables con otras promociones, salvo que se indique
@@ -90,7 +90,7 @@ export default function TerminosPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-black text-brand-ink">Venta de bebidas alcohólicas</h2>
+          <h2 className="text-xl text-ink">Venta de bebidas alcohólicas</h2>
           <p className="mt-2">
             <strong>PENDIENTE:</strong> el menú incluye cerveza. Hay que declarar aquí
             la política de venta a mayores de edad, la identificación requerida y si
@@ -101,7 +101,7 @@ export default function TerminosPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-black text-brand-ink">Contacto</h2>
+          <h2 className="text-xl text-ink">Contacto</h2>
           <p className="mt-2">
             Para cualquier aclaración sobre un pedido, comunícate al{" "}
             {business.phone.displayIntl}.

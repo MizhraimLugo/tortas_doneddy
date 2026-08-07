@@ -19,7 +19,7 @@ import { business, waMessages } from "@/data/business";
 export function StickyOrderBar() {
   return (
     <div
-      className="fixed inset-x-0 bottom-0 z-30 border-t-2 border-brand-gold bg-white/97 p-2.5 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] backdrop-blur md:hidden"
+      className="fixed inset-x-0 bottom-0 z-30 border-t-2 border-ink bg-cream/97 p-2.5 shadow-[0_-6px_24px_rgba(31,16,12,0.14)] backdrop-blur md:hidden"
       // La barra duplica acciones que ya existen en el contenido, así que se
       // oculta a los lectores de pantalla para no repetir los mismos enlaces.
       aria-hidden="true"
@@ -33,16 +33,16 @@ export function StickyOrderBar() {
           size="lg"
         >
           <MessageCircle className="h-5 w-5" aria-hidden="true" />
-          Pedir por WhatsApp
+          Pedir ahora
         </OrderLink>
 
         <OrderLink
           href={business.phone.telHref}
           channel="telefono"
           location="barra_movil"
-          variant="outline"
+          variant="gold"
           size="lg"
-          className="px-4"
+          className="px-5"
           ariaLabel="Llamar por teléfono"
         >
           <Phone className="h-5 w-5" aria-hidden="true" />

@@ -37,22 +37,22 @@ export default function PrivacidadPage() {
         ]}
       />
 
-      <h1 className="mt-5 text-3xl font-black tracking-tight md:text-4xl">
+      <h1 className="mt-5 text-3xl md:text-4xl">
         Aviso de privacidad
       </h1>
 
-      <div className="mt-6 rounded-2xl border-2 border-brand-red-dark bg-brand-gold-soft p-5 text-sm">
+      <div className="mt-6 rounded-2xl border-2 border-brand-red-dark bg-gold-soft p-5 text-sm">
         <p className="font-bold text-brand-red-dark">Pendiente de revisión legal</p>
-        <p className="mt-1 text-brand-ink/80">
+        <p className="mt-1 text-ink/80">
           Este documento es una plantilla base. Antes de publicar el sitio hay que
           completar los datos marcados como <strong>PENDIENTE</strong> y validarlo con
           un abogado. Elimina este recuadro cuando esté listo.
         </p>
       </div>
 
-      <div className="mt-8 grid gap-6 text-base leading-relaxed text-brand-ink/80">
+      <div className="mt-8 grid gap-6 text-base leading-relaxed text-ink/80">
         <section>
-          <h2 className="text-xl font-black text-brand-ink">Responsable de tus datos</h2>
+          <h2 className="text-xl text-ink">Responsable de tus datos</h2>
           <p className="mt-2">
             {business.name}, con domicilio en {fullAddress}, México, es responsable del
             uso y protección de tus datos personales, conforme a la Ley Federal de
@@ -61,7 +61,7 @@ export default function PrivacidadPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-black text-brand-ink">Qué datos recabamos</h2>
+          <h2 className="text-xl text-ink">Qué datos recabamos</h2>
           <p className="mt-2">
             Cuando haces un pedido podemos recabar tu nombre, número de teléfono y
             dirección de entrega. Los recabamos únicamente cuando tú nos los
@@ -70,7 +70,7 @@ export default function PrivacidadPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-black text-brand-ink">Para qué los usamos</h2>
+          <h2 className="text-xl text-ink">Para qué los usamos</h2>
           <p className="mt-2">
             Usamos tus datos exclusivamente para preparar y entregar tu pedido,
             contactarte si hay alguna duda sobre él, y llevar el registro de la venta.
@@ -84,7 +84,7 @@ export default function PrivacidadPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-black text-brand-ink">Derechos ARCO</h2>
+          <h2 className="text-xl text-ink">Derechos ARCO</h2>
           <p className="mt-2">
             Tienes derecho a acceder, rectificar, cancelar u oponerte al tratamiento de
             tus datos personales. Para ejercer cualquiera de estos derechos, escríbenos
@@ -97,7 +97,7 @@ export default function PrivacidadPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-black text-brand-ink">Datos de navegación</h2>
+          <h2 className="text-xl text-ink">Datos de navegación</h2>
           <p className="mt-2">
             <strong>PENDIENTE:</strong> si instalas Google Analytics o un píxel de
             publicidad, hay que declararlo aquí junto con el aviso de cookies
@@ -106,7 +106,7 @@ export default function PrivacidadPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-black text-brand-ink">Cambios a este aviso</h2>
+          <h2 className="text-xl text-ink">Cambios a este aviso</h2>
           <p className="mt-2">
             Cualquier modificación a este aviso de privacidad se publicará en esta
             misma página.
