@@ -14,7 +14,7 @@ import { business, serviceAreasText, waMessages } from "@/data/business";
  *     sólido. Si el objetivo de la página es que pidan, ese botón es el que
  *     debe dominar.
  *  2. Orden de canales. WhatsApp y teléfono van primero porque no pagan
- *     comisión; Rappi y Uber Eats después. Cada pedido que se mueve de una
+ *     comisión; Rappi y Didi Food después. Cada pedido que se mueve de una
  *     plataforma al canal directo conserva el margen completo.
  */
 export function Delivery() {
@@ -60,10 +60,10 @@ export function Delivery() {
         />
         <Channel
           icon={<ShoppingBag className="h-7 w-7" aria-hidden="true" />}
-          title="Uber Eats"
+          title="Didi Food"
           detail="Pago en la app y seguimiento del repartidor."
-          href={business.links.uberEats}
-          channel="uber_eats"
+          href={business.links.didiFood}
+          channel="didi_food"
         />
       </ul>
     </section>
@@ -84,7 +84,7 @@ function Channel({
   detail: string;
   badge?: string;
   href: string;
-  channel: "whatsapp" | "telefono" | "rappi" | "uber_eats";
+  channel: "whatsapp" | "telefono" | "rappi" | "didi_food";
   featured?: boolean;
 }) {
   return (

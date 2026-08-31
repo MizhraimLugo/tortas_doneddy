@@ -43,7 +43,7 @@ function buildLlmsTxt(): string {
     `- **Horario**: ${business.hours.range}, ${business.hours.openDaysEs}. ${business.hours.closedNote}.`
   );
   lines.push(`- **Entrega a domicilio**: ${serviceAreasText}`);
-  lines.push(`- **Formas de pedir**: WhatsApp, teléfono, Rappi, Uber Eats, en el local`);
+  lines.push(`- **Formas de pedir**: WhatsApp, teléfono, Rappi, Didi Food, en el local`);
   lines.push(`- **Rango de precios**: ${business.priceRange} (moneda: ${business.currency})`);
   lines.push(`- **Google Maps**: ${business.links.googleMaps}`);
   lines.push(`- **Instagram**: ${business.links.instagram}`);
@@ -93,7 +93,7 @@ function buildLlmsTxt(): string {
   lines.push("");
   lines.push(
     "Los precios promocionales aplican en pedidos directos por WhatsApp o teléfono. " +
-      "En Rappi y Uber Eats pueden variar por comisiones de plataforma."
+      "En Rappi y Didi Food pueden variar por comisiones de plataforma."
   );
   lines.push("");
 

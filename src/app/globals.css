@@ -78,11 +78,30 @@
     text-rendering: optimizeLegibility;
   }
 
+  /*
+   * Encabezados en Alfa Slab One.
+   *
+   * REGLA DE TAMAÑO: la tipografía de titulares se usa de `text-xl` (20 px)
+   * hacia arriba. Por debajo de eso sus remates son tan gruesos en proporción
+   * que las letras se cierran y la palabra se lee como una mancha. Para
+   * subtítulos chicos —los de una tarjeta, un paso, una pregunta— va Barlow con
+   * peso alto:
+   *
+   *     className="font-sans text-base font-extrabold leading-snug"
+   *
+   * `font-synthesis-weight: none` está para que romper esa regla se note. Alfa
+   * Slab One solo tiene el peso 400, así que al escribirle `font-bold` el
+   * navegador no encuentra la variante y la FALSIFICA engrosando los trazos por
+   * su cuenta; sobre una tipografía que ya es pesadísima, el resultado es
+   * ilegible y en el código no se ve nada raro. Con esto, un `font-bold` de más
+   * simplemente no hace nada en vez de emborronar el texto.
+   */
   h1,
   h2,
   h3 {
     font-family: var(--font-display);
     font-weight: 400; /* Alfa Slab One solo tiene un peso, y ya es pesadísimo */
+    font-synthesis-weight: none;
     line-height: 1.02;
     letter-spacing: -0.015em;
   }

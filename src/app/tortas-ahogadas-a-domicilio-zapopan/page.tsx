@@ -37,12 +37,14 @@ const TRAIL = [
 export const metadata = buildMetadata({
   path: "/tortas-ahogadas-a-domicilio-zapopan",
   title: "Tortas Ahogadas a Domicilio en Zapopan",
-  description: `Entrega de tortas ahogadas a domicilio en La Cima, Real Valdepeñas y Lomas de Zapopan. Pide por WhatsApp al ${business.phone.display}. Abrimos de ${business.hours.range}.`,
+  // Las colonias salen de `business.serviceAreas`: escritas a mano aquí se
+  // quedaron desfasadas cuando cambió la zona de reparto, y una descripción de
+  // resultado de búsqueda que promete una colonia a la que ya no se llega es
+  // peor que no mencionarla.
+  description: `Entrega de tortas ahogadas a domicilio en ${business.serviceAreas.join(", ")}. Pide por WhatsApp al ${business.phone.display}. Abrimos de ${business.hours.range}.`,
   keywords: [
     "tortas ahogadas a domicilio Zapopan",
-    "tortas ahogadas domicilio La Cima",
-    "tortas ahogadas Real Valdepeñas",
-    "comida a domicilio Lomas de Zapopan",
+    ...business.serviceAreas.map((area) => `tortas ahogadas ${area}`),
   ],
 });
 
@@ -82,7 +84,7 @@ export default function DomicilioPage() {
           <>
             {business.name} entrega tortas ahogadas a domicilio en {serviceAreasText}.
             Pides por WhatsApp al {business.phone.displayIntl}, por teléfono al mismo
-            número, o desde Rappi y Uber Eats. Servimos de {business.hours.range},{" "}
+            número, o desde Rappi y Didi Food. Servimos de {business.hours.range},{" "}
             {business.hours.openDaysEs.toLowerCase()};{" "}
             {business.hours.closedNote.toLowerCase()}.
           </>
@@ -144,7 +146,9 @@ export default function DomicilioPage() {
                 key={area}
                 className="rounded-2xl border-2 border-gold bg-gold-soft px-4 py-3"
               >
-                <h3 className="font-bold">Tortas ahogadas en {area}</h3>
+                <h3 className="font-sans text-base font-extrabold leading-snug">
+                  Tortas ahogadas en {area}
+                </h3>
                 <p className="mt-0.5 text-sm text-ink/70">
                   Entrega a domicilio disponible en horario de servicio.
                 </p>
@@ -184,7 +188,7 @@ export default function DomicilioPage() {
                   {index + 1}
                 </span>
                 <div>
-                  <h3 className="font-bold">{paso.titulo}</h3>
+                  <h3 className="font-sans text-base font-extrabold leading-snug">{paso.titulo}</h3>
                   <p className="mt-1 text-base leading-relaxed text-ink/75">
                     {paso.detalle}
                   </p>
@@ -207,7 +211,7 @@ export default function DomicilioPage() {
 
           <div className="mt-5 grid gap-4 sm:grid-cols-2">
             <div className="rounded-2xl border-2 border-brand-green-dark bg-gold-soft p-5">
-              <h3 className="flex items-center gap-2 ">
+              <h3 className="flex items-center gap-2 font-sans text-base font-extrabold">
                 <MessageCircle className="h-5 w-5 text-brand-green-dark" aria-hidden="true" />
                 Directo por WhatsApp o teléfono
               </h3>
@@ -227,9 +231,9 @@ export default function DomicilioPage() {
             </div>
 
             <div className="rounded-2xl border-2 border-gold bg-white p-5">
-              <h3 className="flex items-center gap-2 ">
+              <h3 className="flex items-center gap-2 font-sans text-base font-extrabold">
                 <ShoppingBag className="h-5 w-5 text-brand-red-dark" aria-hidden="true" />
-                Rappi y Uber Eats
+                Didi Food y Rappi
               </h3>
               <ul className="mt-3 grid gap-1.5 text-sm text-ink/75">
                 <li>Pagas con tarjeta dentro de la app</li>
@@ -246,12 +250,12 @@ export default function DomicilioPage() {
                   Rappi
                 </OrderLink>
                 <OrderLink
-                  href={business.links.uberEats}
-                  channel="uber_eats"
+                  href={business.links.didiFood}
+                  channel="didi_food"
                   location="domicilio_comparativa"
                   variant="outline"
                 >
-                  Uber Eats
+                  Didi Food
                 </OrderLink>
               </div>
             </div>

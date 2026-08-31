@@ -131,7 +131,7 @@ export function Combos({ intro }: CombosProps = {}) {
 
         <p className="mt-8 text-center text-sm text-cream/70">
           Los precios de promoción aplican en pedidos directos por WhatsApp o teléfono.
-          En Rappi y Uber Eats pueden variar por las comisiones de cada plataforma.
+          En Rappi y Didi Food pueden variar por las comisiones de cada plataforma.
         </p>
       </div>
     </section>

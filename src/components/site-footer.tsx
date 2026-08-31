@@ -131,12 +131,12 @@ export function SiteFooter() {
               </li>
               <li>
                 <a
-                  href={business.links.uberEats}
+                  href={business.links.didiFood}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center rounded-full border-2 border-cream/45 px-5 py-2 font-display text-base transition-colors hover:border-gold hover:bg-gold hover:text-ink"
                 >
-                  Uber Eats
+                  Didi Food
                 </a>
               </li>
             </ul>

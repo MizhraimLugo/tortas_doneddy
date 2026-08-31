@@ -144,13 +144,40 @@ describe("datos estructurados", () => {
     expect(serialized).not.toMatch(/"(url|item|hasMap|menu)":\s*"#/);
   });
 
-  it("el horario excluye el día de descanso", () => {
+  it("el horario excluye los días de descanso", () => {
+    // Se deriva del horario en vez de fijar el número de días a mano: publicar
+    // como abierto un día en que se descansa manda gente al local para nada, y
+    // Google lo muestra en la ficha del negocio.
+    const EN_INGLES: Record<string, string> = {
+      Lunes: "Monday",
+      Martes: "Tuesday",
+      Miércoles: "Wednesday",
+      Jueves: "Thursday",
+      Viernes: "Friday",
+      Sábado: "Saturday",
+      Domingo: "Sunday",
+    };
+
     const restaurant = data["@graph"].find((n) => n["@type"] === "Restaurant");
     const spec = (restaurant!.openingHoursSpecification as Array<Record<string, unknown>>)[0];
     const days = spec.dayOfWeek as string[];
 
-    expect(days).toHaveLength(6);
-    expect(days.some((d) => d.includes("Tuesday"))).toBe(false);
+    expect(days).toHaveLength(7 - business.hours.closedDays.length);
+
+    for (const cerrado of business.hours.closedDays) {
+      const ingles = EN_INGLES[cerrado];
+      expect(ingles, `"${cerrado}" no está en la tabla de días`).toBeDefined();
+      expect(
+        days.some((d) => d.endsWith(`/${ingles}`)),
+        `el horario publica ${cerrado} como día abierto`
+      ).toBe(false);
+    }
+
+    // Y al revés: el texto visible tampoco debe anunciar un día de descanso.
+    for (const cerrado of business.hours.closedDays) {
+      expect(business.hours.openDaysEs.toLowerCase()).not.toContain(cerrado.toLowerCase());
+      expect(business.hours.closedNote.toLowerCase()).toContain(cerrado.toLowerCase());
+    }
   });
 
   it("el menú estructurado incluye todos los platillos con su precio", () => {

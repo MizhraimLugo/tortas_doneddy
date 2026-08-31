@@ -91,13 +91,13 @@ export function Hero() {
               Rappi
             </OrderLink>
             <OrderLink
-              href={business.links.uberEats}
-              channel="uber_eats"
+              href={business.links.didiFood}
+              channel="didi_food"
               location="hero"
               variant="onDarkOutline"
               size="sm"
             >
-              Uber Eats
+              Didi Food
             </OrderLink>
             <span className="text-cream/55">Promos pueden variar por plataforma</span>
           </div>

@@ -172,7 +172,7 @@ export default function MenuPage() {
         </div>
 
         <p className="mt-8 max-w-3xl text-sm text-ink/60">
-          Los precios pueden variar en Rappi y Uber Eats por las comisiones de cada
+          Los precios pueden variar en Rappi y Didi Food por las comisiones de cada
           plataforma. Para el precio de esta página, pide directo por WhatsApp o
           teléfono.
         </p>
@@ -198,8 +198,8 @@ export default function MenuPage() {
               ¿Ya sabes qué vas a pedir?
             </h2>
             <p className="mt-3 max-w-xl text-base leading-relaxed text-ink/80">
-              Te lo llevamos a domicilio en La Cima, Real Valdepeñas, Lomas de Zapopan
-              y colonias cercanas. Ahí te explicamos cómo pedir paso a paso y hasta
+              Te lo llevamos a domicilio en {business.serviceAreas.join(", ")} y
+              colonias cercanas. Ahí te explicamos cómo pedir paso a paso y hasta
               dónde llegamos.
             </p>
             <Link

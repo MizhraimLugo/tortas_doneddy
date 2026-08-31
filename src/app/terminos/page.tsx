@@ -48,7 +48,7 @@ export default function TerminosPage() {
         <p>
           Los precios publicados en este sitio están en pesos mexicanos e incluyen
           impuestos. Aplican a pedidos directos por WhatsApp, teléfono o en el local.
-          En Rappi y Uber Eats los precios pueden diferir por las comisiones de cada
+          En Rappi y Didi Food los precios pueden diferir por las comisiones de cada
           plataforma.
         </p>
         <p>

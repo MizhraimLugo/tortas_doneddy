@@ -1,7 +1,7 @@
 /**
  * Medición de conversión, agnóstica del proveedor.
  *
- * La versión anterior no medía nada: cuatro botones de Rappi, dos de Uber Eats,
+ * La versión anterior no medía nada: cuatro botones de Rappi, dos de Didi Food,
  * varios de WhatsApp y de llamada, sin forma de saber cuál genera pedidos. Sin
  * este dato no se puede decidir dónde invertir ni qué CTA mover.
  *
@@ -21,7 +21,7 @@ export type OrderChannel =
   | "whatsapp"
   | "telefono"
   | "rappi"
-  | "uber_eats"
+  | "didi_food"
   | "maps"
   | "instagram";
 

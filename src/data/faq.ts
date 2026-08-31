@@ -42,22 +42,36 @@ const tortaPrice = formatPrice(findMenuItem("torta-ahogada").price);
 const tacoPrice = formatPrice(findMenuItem("taco-sencillo").price);
 const comboBarato = combos.reduce((a, b) => (a.promo < b.promo ? a : b));
 
+/**
+ * Colonias vecinas para ubicar el local, derivadas de la zona de reparto y no
+ * escritas a mano. Se salta la primera porque es donde está el local: decir
+ * "estamos a unos minutos de La Cima" cuando la dirección ya dice La Cima no
+ * orienta a nadie.
+ */
+const vecinas = (() => {
+  const otras = business.serviceAreas.slice(1);
+  return `${otras.slice(0, -1).join(", ")} y ${otras[otras.length - 1]}`;
+})();
+
+/** Días de descanso en prosa: "los lunes y martes". */
+const descansoTexto = business.hours.closedDays.join(" y ").toLowerCase();
+
 export const faq: FaqItem[] = [
   {
     q: "¿Dónde están ubicadas las Tortas Ahogadas Don Eddy?",
-    a: `${business.name} está en ${fullAddress}, en la zona norte de Zapopan, Jalisco. Estamos sobre Avenida Federalistas, en el Local 6, a unos minutos de Real Valdepeñas y Lomas de Zapopan.`,
+    a: `${business.name} está en ${fullAddress}, en la zona norte de Zapopan, Jalisco. Estamos sobre Avenida Federalistas, en el Local 6, a unos minutos de ${vecinas}.`,
     featured: true,
     topics: ["domicilio"],
   },
   {
     q: "¿Cuál es el horario de Tortas Don Eddy?",
-    a: `Abrimos de ${business.hours.range}, de ${business.hours.openDaysEs}. Los martes permanecemos cerrados.`,
+    a: `Abrimos de ${business.hours.range}, de ${business.hours.openDaysEs}. Los ${descansoTexto} descansamos.`,
     featured: true,
     topics: ["menu", "domicilio"],
   },
   {
     q: "¿Hacen entregas a domicilio y en qué colonias?",
-    a: `Sí, entregamos a domicilio en ${serviceAreasText}, en Zapopan. Puedes pedir por WhatsApp al ${business.phone.displayIntl}, por teléfono, o a través de Rappi y Uber Eats según disponibilidad.`,
+    a: `Sí, entregamos a domicilio en ${serviceAreasText}, en Zapopan. Puedes pedir por WhatsApp al ${business.phone.displayIntl}, por teléfono, o a través de Rappi y Didi Food según disponibilidad.`,
     featured: true,
     topics: ["domicilio"],
   },
@@ -69,7 +83,7 @@ export const faq: FaqItem[] = [
   },
   {
     q: "¿Cómo hago un pedido en Don Eddy?",
-    a: `Puedes hacer tu pedido de tres formas: por WhatsApp al ${business.phone.displayIntl}, llamando al mismo número, o desde las aplicaciones de Rappi y Uber Eats. También puedes llegar directo al local en ${business.address.street}, ${business.address.neighborhood}, Zapopan.`,
+    a: `Puedes hacer tu pedido de tres formas: por WhatsApp al ${business.phone.displayIntl}, llamando al mismo número, o desde las aplicaciones de Rappi y Didi Food. También puedes llegar directo al local en ${business.address.street}, ${business.address.neighborhood}, Zapopan.`,
     featured: true,
     topics: ["menu", "domicilio"],
   },
@@ -125,8 +139,8 @@ export const faq: FaqItem[] = [
     topics: ["menu"],
   },
   {
-    q: "¿Están en Rappi y Uber Eats?",
-    a: "Sí, puedes encontrarnos en Rappi y en Uber Eats. Los precios y las promociones pueden variar entre plataformas por las comisiones de cada servicio; pedir directo por WhatsApp suele salir mejor.",
+    q: "¿Están en Rappi y Didi Food?",
+    a: "Sí, puedes encontrarnos en Didi Food y en Rappi. Los precios y las promociones pueden variar entre plataformas por las comisiones de cada servicio; pedir directo por WhatsApp suele salir mejor.",
     topics: ["menu", "domicilio"],
   },
   {

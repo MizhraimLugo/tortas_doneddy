@@ -113,35 +113,31 @@ export const business = {
     closes: "16:00",
     /** Texto humano, reutilizado en toda la página. */
     range: "9:00 a 16:00 h",
-    closedDay: "Martes",
-    closedNote: "Martes cerrado",
+    /** Días de descanso, en español y para el texto visible. */
+    closedDays: ["Lunes", "Martes"] as const,
+    closedNote: "Lunes y martes cerrado",
     /** Días abiertos en formato schema.org */
-    openDays: [
-      "Monday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
-    ] as const,
+    openDays: ["Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] as const,
     /** Días abiertos en español, para el texto visible. */
-    openDaysEs: "Lunes, miércoles, jueves, viernes, sábado y domingo",
+    openDaysEs: "Miércoles, jueves, viernes, sábado y domingo",
   },
 
   // ── Cobertura de reparto ───────────────────────────────────────────────────
   /**
    * Las colonias listadas una por una capturan búsquedas long-tail
-   * ("tortas ahogadas Real Valdepeñas") y le dan a los motores de IA una
+   * ("tortas ahogadas Valdepeñas") y le dan a los motores de IA una
    * respuesta concreta a "¿entregan en mi zona?".
    */
   serviceAreas: [
     "La Cima",
-    "Real Valdepeñas",
+    "Valdepeñas",
+    "Cañada San Lorenzo",
     "Lomas de Zapopan",
-    "Jardines de Nuevo México",
-    "Villas de Guadalupe",
   ],
-  serviceAreaNote: "y colonias aledañas del norte de Zapopan",
+  // Sin "y" al principio: la lista de colonias ya termina con una ("…y Lomas de
+  // Zapopan"), y encadenar las dos daba "…y Lomas de Zapopan y colonias
+  // aledañas…". Se une con coma en `serviceAreasText`.
+  serviceAreaNote: "además de colonias aledañas del norte de Zapopan",
 
   // ── Enlaces externos ───────────────────────────────────────────────────────
   links: {
@@ -157,7 +153,7 @@ export const business = {
     // plataforma. Apuntar a la home genérica pierde el pedido: el usuario
     // aterriza en un buscador y tiene que encontrarte por su cuenta.
     rappi: "https://www.rappi.com.mx",
-    uberEats: "https://www.ubereats.com",
+    didiFood: "https://www.didi-food.com/es-MX",
   },
 
   priceRange: "$$",
@@ -178,7 +174,7 @@ export const fullAddress = `${business.address.street}, ${business.address.neigh
 export const serviceAreasText = (() => {
   const areas = [...business.serviceAreas];
   const last = areas.pop();
-  return `${areas.join(", ")} y ${last} ${business.serviceAreaNote}`;
+  return `${areas.join(", ")} y ${last}, ${business.serviceAreaNote}`;
 })();
 
 /** Horario en una línea. */
