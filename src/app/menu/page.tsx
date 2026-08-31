@@ -142,7 +142,13 @@ export default function MenuPage() {
           el CSS.
         */}
         <nav aria-label="Secciones del menú">
-          <h2 className="text-xs font-extrabold uppercase tracking-[0.22em] text-brand-red-dark">
+          {/*
+            `font-sans` es obligatorio: es un `h2`, y los encabezados heredan
+            Alfa Slab One, que a 12 px se cierra y además no tiene el peso 800
+            que se le pide aquí. Los antetítulos del resto del sitio van en
+            Barlow; sin esto, este sería el único distinto.
+          */}
+          <h2 className="font-sans text-xs font-extrabold uppercase tracking-[0.22em] text-brand-red-dark">
             Ir directo a
           </h2>
           <ul className="mt-4 flex flex-wrap gap-2">

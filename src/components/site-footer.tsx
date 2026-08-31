@@ -124,7 +124,7 @@ export function SiteFooter() {
                   href={business.links.rappi}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center rounded-full border-2 border-cream/45 px-5 py-2 font-display text-base transition-colors hover:border-gold hover:bg-gold hover:text-ink"
+                  className="inline-flex items-center rounded-full border-2 border-cream/45 px-5 py-2 font-sans text-xs font-extrabold uppercase tracking-wide transition-colors hover:border-gold hover:bg-gold hover:text-ink"
                 >
                   Rappi
                 </a>
@@ -134,7 +134,7 @@ export function SiteFooter() {
                   href={business.links.didiFood}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center rounded-full border-2 border-cream/45 px-5 py-2 font-display text-base transition-colors hover:border-gold hover:bg-gold hover:text-ink"
+                  className="inline-flex items-center rounded-full border-2 border-cream/45 px-5 py-2 font-sans text-xs font-extrabold uppercase tracking-wide transition-colors hover:border-gold hover:bg-gold hover:text-ink"
                 >
                   Didi Food
                 </a>

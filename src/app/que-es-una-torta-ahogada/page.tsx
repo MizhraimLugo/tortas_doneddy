@@ -118,7 +118,7 @@ export default function GuiaPage() {
           aria-label="Contenido de la guía"
           className="mt-6 rounded-2xl border-2 border-ink bg-gold-soft p-5 shadow-stamp-gold"
         >
-          <h2 className="text-xs font-extrabold uppercase tracking-[0.22em] text-brand-red-dark">
+          <h2 className="font-sans text-xs font-extrabold uppercase tracking-[0.22em] text-brand-red-dark">
             En esta guía
           </h2>
           <ol className="mt-3 grid gap-1.5 text-base sm:grid-cols-2">
