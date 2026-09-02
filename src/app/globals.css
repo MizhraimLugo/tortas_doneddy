@@ -1,0 +1,227 @@
+@import "tailwindcss";
+
+/**
+ * Sistema visual: rotulación de fonda jalisciense.
+ *
+ * La referencia no es una landing de software, es la señalética pintada a mano
+ * de los puestos y fondas del occidente de México: losa pesada, rojo profundo,
+ * dorado que salta, papel picado y textura de cartel impreso.
+ *
+ * Contraste verificado sobre el rojo de fondo #9B1209:
+ *   texto blanco  → 8.45:1  ✓ AA y AAA
+ *   texto dorado  → 4.72:1  ✓ AA
+ * Y sobre crema #FFF6E8:
+ *   rojo oscuro   → 5.4:1   ✓ AA
+ *   verde oscuro  → 6.2:1   ✓ AA
+ */
+@theme {
+  /* Rojos: el profundo es campo de fondo, el vivo es acento */
+  --color-chile: #9b1209;
+  --color-chile-deep: #7a0e06;
+  --color-brand-red: #e9241a;
+  --color-brand-red-dark: #cd1c11;
+
+  /* Verde de limón/tomatillo, para precios y confirmaciones */
+  --color-brand-green: #3b874c;
+  --color-brand-green-dark: #2f6b3d;
+
+  /* Dorado: el acento que salta sobre el rojo */
+  --color-gold: #ecba54;
+  --color-gold-deep: #d49f34;
+  --color-gold-soft: #fdf0d3;
+
+  /* Papel */
+  --color-cream: #fff6e8;
+  --color-cream-deep: #f7e9d4;
+  --color-ink: #1f100c;
+
+  --font-display: var(--font-alfa), Georgia, serif;
+  --font-sans: var(--font-barlow), ui-sans-serif, system-ui, sans-serif;
+
+  --spacing-13: 3.25rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /*
+   * El encabezado fijo mide ~96 px. Sin este margen cada ancla aterriza con el
+   * título escondido detrás. Resolverlo en CSS permite que los enlaces
+   * funcionen aunque el JavaScript no cargue.
+   */
+  [id] {
+    scroll-margin-top: 7rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+  }
+
+  /*
+   * Encabezados en Alfa Slab One.
+   *
+   * REGLA DE TAMAÑO: la tipografía de titulares se usa de `text-xl` (20 px)
+   * hacia arriba. Por debajo de eso sus remates son tan gruesos en proporción
+   * que las letras se cierran y la palabra se lee como una mancha. Para
+   * subtítulos chicos —los de una tarjeta, un paso, una pregunta— va Barlow con
+   * peso alto:
+   *
+   *     className="font-sans text-base font-extrabold leading-snug"
+   *
+   * `font-synthesis-weight: none` está para que romper esa regla se note. Alfa
+   * Slab One solo tiene el peso 400, así que al escribirle `font-bold` el
+   * navegador no encuentra la variante y la FALSIFICA engrosando los trazos por
+   * su cuenta; sobre una tipografía que ya es pesadísima, el resultado es
+   * ilegible y en el código no se ve nada raro. Con esto, un `font-bold` de más
+   * simplemente no hace nada en vez de emborronar el texto.
+   */
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400; /* Alfa Slab One solo tiene un peso, y ya es pesadísimo */
+    font-synthesis-weight: none;
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary {
+    list-style: none;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-ink);
+  }
+}
+
+@layer utilities {
+  /**
+   * Contenedor del sitio.
+   *
+   * El margen lateral crece con el viewport en vez de quedarse fijo en 16 px.
+   * Con `px-4` constante, en una laptop el texto arrancaba a 16 px del borde de
+   * la pantalla y se veía apretado y barato. El `clamp` lo resuelve sin
+   * breakpoints: 1 rem en móvil, hasta 2 rem en pantallas grandes.
+   */
+  .shell {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 72rem;
+    padding-inline: clamp(1rem, 4vw, 2rem);
+  }
+  .shell-mid {
+    max-width: 56rem;
+  }
+  .shell-narrow {
+    max-width: 48rem;
+  }
+
+  /* Enlace de salto: solo visible al recibir foco por teclado. */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+  }
+  .skip-link:focus {
+    left: 1rem;
+    top: 1rem;
+  }
+
+  /**
+   * Grano de cartel impreso.
+   *
+   * Es una textura SVG embebida como data URI: no pide red, no suma peticiones
+   * y da la sensación de tinta sobre papel en lugar de color plano digital.
+   */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.28'/%3E%3C/svg%3E");
+  }
+
+  /* Trama de puntos, como impresión de medio tono en cartel viejo. */
+  .halftone {
+    background-image: radial-gradient(
+      currentColor 1px,
+      transparent 1.1px
+    );
+    background-size: 10px 10px;
+  }
+
+  /* Sombra dura desplazada: capas de serigrafía, no difuminado digital. */
+  .shadow-stamp {
+    box-shadow: 5px 5px 0 0 var(--color-ink);
+  }
+  .shadow-stamp-gold {
+    box-shadow: 5px 5px 0 0 var(--color-gold-deep);
+  }
+  .shadow-stamp-red {
+    box-shadow: 5px 5px 0 0 var(--color-chile-deep);
+  }
+
+  /**
+   * Etiqueta de precio con muesca, como los cartelitos colgados de un puesto.
+   * El recorte va del lado izquierdo, donde iría el hilo.
+   */
+  .price-tag {
+    clip-path: polygon(
+      12px 0,
+      100% 0,
+      100% 100%,
+      12px 100%,
+      0 50%
+    );
+    padding-left: 1.25rem;
+  }
+
+  /* Aparición escalonada en la carga; el retraso lo pone cada elemento. */
+  .rise {
+    animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
